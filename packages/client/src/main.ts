@@ -19,9 +19,7 @@ $getScreenshot?.addEventListener('click', async () => {
   if (res.state === 'success') {
     const { imageSrc, id, time, url } = res
     step1.delete()
-
     step2.insert({ imageSrc, id, time, url })
-
     const $createGIF = document.querySelector('.create-gif')
     $createGIF?.addEventListener('click', async () => {
       const res = await step2.onButtonClick()

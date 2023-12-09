@@ -1,7 +1,7 @@
 export default class Step3 {
   target: HTMLDivElement
-  url: string
-  $download: HTMLAnchorElement
+  url: string | undefined
+  $download: HTMLAnchorElement | undefined
 
   constructor(target: HTMLDivElement) {
     this.target = target
@@ -10,7 +10,7 @@ export default class Step3 {
   insert(url: string) {
     this.url = url
     this.render()
-    this.$download = document.querySelector('download')
+    this.$download = document.querySelector('download') as HTMLAnchorElement
   }
 
   render() {

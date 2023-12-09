@@ -8,7 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "client": "yarn workspace client start",
+    "client": "yarn workspace client dev",
     "server": "yarn workspace server start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

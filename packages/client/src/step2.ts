@@ -10,15 +10,15 @@ interface InsertProps {
 
 export default class Step2 {
   target: HTMLDivElement
-  imageSrc: string
-  url: string
-  id: string
-  time: (string | number)[]
-  cropData: object
-  $speed: HTMLSelectElement
-  $image: HTMLImageElement
-  $preview: HTMLDivElement
-  $resize: HTMLInputElement
+  imageSrc: string | undefined
+  url: string | undefined
+  id: string | undefined
+  time: (string | number)[] | undefined
+  cropData: object | undefined
+  $speed: HTMLSelectElement | undefined
+  $image: HTMLImageElement | undefined
+  $preview: HTMLDivElement | undefined
+  $resize: HTMLInputElement | undefined
 
   constructor(target: HTMLDivElement) {
     this.target = target
@@ -50,10 +50,10 @@ export default class Step2 {
       </select>
     `
 
-    this.$image = document.querySelector('.image')
-    this.$preview = document.querySelector('.preview')
-    this.$resize = document.querySelector('.resize')
-    this.$speed = document.querySelector('.speed')
+    this.$image = document.querySelector('.image') as HTMLImageElement
+    this.$preview = document.querySelector('.preview') as HTMLDivElement
+    this.$resize = document.querySelector('.resize') as HTMLInputElement
+    this.$speed = document.querySelector('.speed') as HTMLSelectElement
   }
 
   delete() {
@@ -68,7 +68,7 @@ export default class Step2 {
   }
 
   setCropper(t: Step2) {
-    new Cropper(this.$image, {
+    new Cropper(this.$image as HTMLImageElement, {
       viewMode: 2,
       preview: this.$preview,
       background: false,
@@ -91,8 +91,8 @@ export default class Step2 {
         id: this.id,
         time: this.time,
         cropData: this.cropData,
-        resizeWidth: this.$resize.value,
-        speed: this.$speed.options[this.$speed.selectedIndex].value,
+        resizeWidth: this.$resize?.value,
+        speed: this.$speed?.options[this.$speed.selectedIndex].value,
       }),
     })
 
