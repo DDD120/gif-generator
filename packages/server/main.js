@@ -3,11 +3,8 @@ const cors = require('cors')
 const fs = require('fs')
 const ffmpeg = require('fluent-ffmpeg')
 const { v4: uuid } = require('uuid')
-const Canvas = require('canvas')
-const GIFEncoder = require('gifencoder')
-const pngFileStream = require('png-file-stream')
 const sharp = require('sharp')
-const input = require('sharp/lib/input')
+const WebSocket = require('ws')
 
 sharp.cache(false)
 const app = express()
@@ -25,6 +22,10 @@ function toBase64(filePath) {
   const img = fs.readFileSync(filePath)
   return Buffer.from(img).toString('base64')
 }
+
+const server = app.listen(4000, () => {
+  console.log('server is running')
+})
 
 app.post('/screenshots', (req, res) => {
   const { url, startTime } = req.body
@@ -49,38 +50,38 @@ app.post('/screenshots', (req, res) => {
     })
 })
 
-app.post('/gif', async (req, res) => {
-  const {
-    cropData: { x, y, width, height },
-    url,
-    time,
-    resizeWidth,
-    id,
-    speed,
-  } = req.body
-  const [startTime, duration] = time
+const wss = new WebSocket.Server({ server })
+wss.on('connection', function connection(ws, req) {
+  console.log('connection')
+  app.post('/gif', async (req, res) => {
+    const {
+      cropData: { x, y, width, height },
+      url,
+      time,
+      resizeWidth,
+      id,
+      speed,
+    } = req.body
+    const [startTime, duration] = time
 
-  ffmpeg(url)
-    .complexFilter(
-      `[0:v] setpts=${speed}*PTS,fps=30,crop=${width}:${height}:${x}:${y},scale=${resizeWidth}:-1, split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1`
-    )
-    .seekInput(startTime)
-    .duration(duration * speed)
-    .save(`screenshots/${id}/animated.gif`)
-    .on('start', (commandLine) => {
-      console.log(commandLine)
-    })
-    .on('end', () => {
-      return res.json({ success: true })
-    })
+    ffmpeg(url)
+      .complexFilter(
+        `[0:v] setpts=${speed}*PTS,fps=30,crop=${width}:${height}:${x}:${y},scale=${resizeWidth}:-1, split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1`
+      )
+      .seekInput(startTime)
+      .duration(duration * speed)
+      .on('progress', function (progress) {
+        ws.send(progress.frames)
+      })
+      .save(`screenshots/${id}/animated.gif`)
+      .on('end', () => {
+        return res.json({ success: true })
+      })
+  })
 })
-//setpts=3*PTS,
+
 app.get('/gif/:id', (req, res) => {
   const { id } = req.params
   console.log(id)
   return res.download(`screenshots/${id}/animated.gif`, 'animated.gif')
-})
-
-app.listen(4000, () => {
-  console.log('server is running')
 })

@@ -56,6 +56,17 @@ export default class Step2 {
     this.$speed = document.querySelector('.speed')
   }
 
+  delete() {
+    this.target.innerHTML = ''
+  }
+
+  progress(percent: number) {
+    this.target.innerHTML = `
+      <h1>progress</h1>
+      <div>${percent}</div>
+    `
+  }
+
   setCropper(t: Step2) {
     new Cropper(this.$image, {
       viewMode: 2,
@@ -99,6 +110,7 @@ export default class Step2 {
   }
 
   async onButtonClick() {
+    this.delete()
     await this.createGIF()
     const url = await this.getGIF()
 
@@ -106,9 +118,5 @@ export default class Step2 {
       state: 'success',
       url,
     }
-  }
-
-  delete() {
-    this.target.innerHTML = ''
   }
 }

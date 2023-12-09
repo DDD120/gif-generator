@@ -184,6 +184,11 @@ var Step1 = /*#__PURE__*/function () {
       this.target.innerHTML = '';
     }
   }, {
+    key: "loading",
+    value: function loading() {
+      this.target.innerHTML = "\n      <div>loading...</div>\n    ";
+    }
+  }, {
     key: "convertTimeToDurationSeconds",
     value: function convertTimeToDurationSeconds(startTime, endTime) {
       var _startTime$split = startTime.split(':'),
@@ -208,9 +213,11 @@ var Step1 = /*#__PURE__*/function () {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              this.delete();
+              this.loading();
+              _context.next = 4;
               return this.createScreenshots(this.input.value);
-            case 2:
+            case 4:
               screenshot = _context.sent;
               duration = this.convertTimeToDurationSeconds(this.startTime.value, this.endTime.value);
               return _context.abrupt("return", {
@@ -220,7 +227,7 @@ var Step1 = /*#__PURE__*/function () {
                 time: [this.startTime.value, duration],
                 imageSrc: "data:image/png;base64,".concat(screenshot.image)
               });
-            case 5:
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -3668,6 +3675,16 @@ var Step2 = /*#__PURE__*/function () {
       this.$speed = document.querySelector('.speed');
     }
   }, {
+    key: "delete",
+    value: function _delete() {
+      this.target.innerHTML = '';
+    }
+  }, {
+    key: "progress",
+    value: function progress(percent) {
+      this.target.innerHTML = "\n      <h1>progress</h1>\n      <div>".concat(percent, "</div>\n    ");
+    }
+  }, {
     key: "setCropper",
     value: function setCropper(t) {
       new _cropperjs.default(this.$image, {
@@ -3753,28 +3770,24 @@ var Step2 = /*#__PURE__*/function () {
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              _context3.next = 2;
+              this.delete();
+              _context3.next = 3;
               return this.createGIF();
-            case 2:
-              _context3.next = 4;
+            case 3:
+              _context3.next = 5;
               return this.getGIF();
-            case 4:
+            case 5:
               url = _context3.sent;
               return _context3.abrupt("return", {
                 state: 'success',
                 url: url
               });
-            case 6:
+            case 7:
             case "end":
               return _context3.stop();
           }
         }, _callee3, this);
       }));
-    }
-  }, {
-    key: "delete",
-    value: function _delete() {
-      this.target.innerHTML = '';
     }
   }]);
   return Step2;
@@ -3850,10 +3863,14 @@ var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 };
+var socket = new WebSocket('ws://localhost:4000/');
 var $stepBox = document.querySelector('.step-box');
 var step1 = new _step.default($stepBox);
 var step2 = new _step2.default($stepBox);
 var step3 = new _step3.default($stepBox);
+socket.addEventListener('message', function (event) {
+  step2.progress(Number(event.data));
+});
 var $getScreenshot = document.querySelector('.get-screenshot');
 $getScreenshot === null || $getScreenshot === void 0 ? void 0 : $getScreenshot.addEventListener('click', function () {
   return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
@@ -3881,16 +3898,15 @@ $getScreenshot === null || $getScreenshot === void 0 ? void 0 : $getScreenshot.a
                 return _regeneratorRuntime().wrap(function _callee$(_context) {
                   while (1) switch (_context.prev = _context.next) {
                     case 0:
-                      console.log('클릭');
-                      _context.next = 3;
+                      _context.next = 2;
                       return step2.onButtonClick();
-                    case 3:
+                    case 2:
                       res = _context.sent;
                       if (res.state === 'success') {
                         step2.delete();
                         step3.insert(res.url);
                       }
-                    case 5:
+                    case 4:
                     case "end":
                       return _context.stop();
                   }
@@ -3930,7 +3946,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "7398" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "12217" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

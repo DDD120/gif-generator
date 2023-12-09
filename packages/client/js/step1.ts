@@ -33,6 +33,12 @@ export default class Step1 {
     this.target.innerHTML = ''
   }
 
+  loading() {
+    this.target.innerHTML = `
+      <div>loading...</div>
+    `
+  }
+
   convertTimeToDurationSeconds(startTime: string, endTime: string): number {
     const [startHours, startMinutes, startSeconds] = startTime.split(':')
     const [endHours, endMinutes, endSeconds] = endTime.split(':')
@@ -48,6 +54,8 @@ export default class Step1 {
   }
 
   async onButtonClick() {
+    this.delete()
+    this.loading()
     const screenshot = await this.createScreenshots(this.input.value)
     const duration = this.convertTimeToDurationSeconds(
       this.startTime.value,
