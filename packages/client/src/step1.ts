@@ -26,6 +26,7 @@ export default class Step1 {
       <input class="endTime" placeholder="00:00" value="00:00:03" />
     </div>
     <button class="get-screenshot">스크린샷 얻기</button>
+
   `
   }
 
