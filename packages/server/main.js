@@ -50,34 +50,44 @@ app.post('/screenshots', (req, res) => {
     })
 })
 
+const clients = new Map()
 const wss = new WebSocket.Server({ server })
-wss.on('connection', function connection(ws, req) {
-  console.log('connection')
-  app.post('/gif', async (req, res) => {
-    const {
-      cropData: { x, y, width, height },
-      url,
-      time,
-      resizeWidth,
-      id,
-      speed,
-    } = req.body
-    const [startTime, duration] = time
+wss.on('connection', (ws) => {
+  const clientId = uuid()
+  ws.send(clientId)
+  clients.set(clientId, ws)
 
-    ffmpeg(url)
-      .complexFilter(
-        `[0:v] setpts=${speed}*PTS,fps=30,crop=${width}:${height}:${x}:${y},scale=${resizeWidth}:-1, split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1`
-      )
-      .seekInput(startTime)
-      .duration(duration * speed)
-      .on('progress', function (progress) {
-        ws.send(progress.frames)
-      })
-      .save(`screenshots/${id}/animated.gif`)
-      .on('end', () => {
-        return res.json({ success: true })
-      })
+  ws.on('close', () => {
+    clients.delete(clientId)
   })
+})
+
+app.post('/gif', async (req, res) => {
+  const {
+    cropData: { x, y, width, height },
+    url,
+    time,
+    resizeWidth,
+    id,
+    speed,
+    wsClientId,
+  } = req.body
+  const [startTime, duration] = time
+
+  ffmpeg(url)
+    .complexFilter(
+      `[0:v] setpts=${speed}*PTS,fps=30,crop=${width}:${height}:${x}:${y},scale=${resizeWidth}:-1, split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1`
+    )
+    .seekInput(startTime)
+    .duration(duration * speed)
+    .on('progress', (progress) => {
+      const ws = clients.get(wsClientId)
+      ws.send(progress.frames)
+    })
+    .save(`screenshots/${id}/animated.gif`)
+    .on('end', () => {
+      res.json({ success: true })
+    })
 })
 
 app.get('/gif/:id', (req, res) => {
