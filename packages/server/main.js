@@ -92,6 +92,5 @@ app.post('/gif', async (req, res) => {
 
 app.get('/gif/:id', (req, res) => {
   const { id } = req.params
-  console.log(id)
   return res.download(`screenshots/${id}/animated.gif`, 'animated.gif')
 })

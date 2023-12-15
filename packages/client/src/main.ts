@@ -11,10 +11,6 @@ const step3 = new Step3($stepBox)
 
 let wsClientId = ''
 
-socket.addEventListener('error', () => {
-  console.log('error')
-})
-
 socket.addEventListener('message', (event) => {
   if (!wsClientId) wsClientId = event.data
   else step2.setProgressPercent(Number(event.data))
@@ -24,17 +20,33 @@ const $getScreenshot = document.querySelector('.get-screenshot')
 $getScreenshot?.addEventListener('click', async () => {
   const res = await step1.onButtonClick()
   if (res.state === 'success') {
-    const { imageSrc, id, startTime, duration, url } = res
-    step1.delete()
-    step2.insert({ imageSrc, id, startTime, duration, url, wsClientId })
-    const $createGIF = document.querySelector('.create-gif')
-    $createGIF?.addEventListener('click', async () => {
-      const res = await step2.onButtonClick()
-      if (res.state === 'success') {
-        console.log(res.url)
-        step2.delete()
-        step3.insert(res.url)
-      }
-    })
+    successStep1(res)
   }
 })
+
+interface SuccessStep1Props {
+  url: string
+  id: any
+  state: any
+  startTime: string
+  duration: number
+  imageSrc: string
+}
+
+const successStep1 = (res: SuccessStep1Props) => {
+  const { imageSrc, id, startTime, duration, url } = res
+  step1.delete()
+  step2.insert({ imageSrc, id, startTime, duration, url, wsClientId })
+  const $createGIF = document.querySelector('.create-gif')
+  $createGIF?.addEventListener('click', async () => {
+    const res = await step2.onButtonClick()
+    if (res.state === 'success') {
+      successStep2(res.url)
+    }
+  })
+}
+
+const successStep2 = (url: string) => {
+  step2.delete()
+  step3.insert(url)
+}
