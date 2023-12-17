@@ -7,33 +7,34 @@ export const step1Template = `
   <div class="grid gap-6 mb-6 md:grid-cols-2">
     <div>
     <label for="start-time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">시작 시간</label>
-    <input placeholder="00:00" value="00:00:02" type="text" id="start-time" class="startTime bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required>
+    <input placeholder="00:00" value="00:00:02" type="text" id="start-time" class="startTime bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]" required>
     </div>
     <div>
         <label for="end-time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">종료 시간</label>
         <input placeholder="00:00" value="00:00:03" type="text" id="end-time" class="endTime bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required>
     </div>
   </div>
-  <button type="button" class="get-screenshot w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">스크린샷 얻기</button>
+  <button type="button" class="get-screenshot w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">완료</button>
   </div>
 `
 
 export const step2Template = (imageSrc: string) => `
 <div>
-  <div class="my-2">
+  <div class="my-4">
     <h2 class="text-2xl font-bold dark:text-white mb-2">자르기</h2>
     <div>
       <img class="image" src=${imageSrc} alt="이미지" />
     </div>
   </div>
-    <div class="my-2">
+    <div class="my-4">
       <h3 class="text-xl font-bold dark:text-white mb-2">프리뷰</h3>
       <div class="preview w-[420px] h-[420px] overflow-hidden bg-slate-400 [&>*]:w-full"></div>
     </div>
-    <div>
+    <hr />
+    <div class="my-4">
       <h2 class="text-2xl font-bold dark:text-white mb-2">옵션</h2>
       <div class="mb-6">
-        <label for="resize" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">리사이징 [PX]</label>
+        <label for="resize" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">넓이 조절 (px 단위)</label>
         <input value="500" type="number" id="resize" class="resize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
       </div>
       <label for="speed" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">속도</label>
@@ -43,7 +44,7 @@ export const step2Template = (imageSrc: string) => `
         <option value="2">느리게</option>
       </select>
     </div>
-    <button type="button" class="create-gif w-full mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">움짤 생성</button>
+    <button type="button" class="create-gif w-full mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">완료</button>
 </div>
 `
 export const step3Template = (url: string) => `
@@ -52,10 +53,10 @@ export const step3Template = (url: string) => `
  <div>
  <div>
      <label for="gif-download-filename" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">저장명</label>
-     <input type="text" id="gif-download-filename" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="generated" required>
+     <input type="text" id="gif-download-filename" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="download" required>
    </div>
    <div class="mt-4">
-       <a href=${url} download="generated" class="download flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">다운로드</a>
+       <a href=${url} download="download" class="download flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">다운로드</a>
    </div>
 </div>
 `
