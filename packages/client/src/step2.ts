@@ -25,6 +25,7 @@ export default class Step2 {
   $image: HTMLImageElement | undefined
   $preview: HTMLDivElement | undefined
   $resize: HTMLInputElement | undefined
+  $container: HTMLDivElement | undefined
 
   constructor(target: HTMLDivElement) {
     this.target = target
@@ -49,6 +50,9 @@ export default class Step2 {
     this.$preview = document.querySelector('.preview') as HTMLDivElement
     this.$resize = document.querySelector('.resize') as HTMLInputElement
     this.$speed = document.querySelector('.speed') as HTMLSelectElement
+    this.$container = document.querySelector(
+      '.step2-container'
+    ) as HTMLDivElement
   }
 
   delete() {
@@ -56,7 +60,8 @@ export default class Step2 {
   }
 
   progressRender() {
-    this.target.innerHTML = progressTemplate
+    if (!this.$container) return
+    this.$container.innerHTML = progressTemplate
   }
 
   setProgressPercent(frame: number) {
@@ -104,7 +109,6 @@ export default class Step2 {
   }
 
   async onButtonClick() {
-    this.delete()
     this.progressRender()
     await this.createGIF()
     const url = await this.getGIF()

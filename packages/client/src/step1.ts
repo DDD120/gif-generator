@@ -3,6 +3,7 @@ import axios from './axios'
 
 export default class Step1 {
   target: HTMLDivElement
+  container: HTMLDivElement
   input: HTMLInputElement
   startTime: HTMLInputElement
   endTime: HTMLInputElement
@@ -12,6 +13,9 @@ export default class Step1 {
     this.render()
 
     this.input = document.querySelector('.url-input') as HTMLInputElement
+    this.container = document.querySelector(
+      '.step1-container'
+    ) as HTMLInputElement
     this.startTime = document.querySelector('.startTime') as HTMLInputElement
     this.endTime = document.querySelector('.endTime') as HTMLInputElement
   }
@@ -25,7 +29,7 @@ export default class Step1 {
   }
 
   loading() {
-    this.target.innerHTML = loadingTemplate
+    this.container.innerHTML = loadingTemplate
   }
 
   convertTimeToDurationSeconds(startTime: string, endTime: string): number {
@@ -38,7 +42,6 @@ export default class Step1 {
   }
 
   async onButtonClick() {
-    this.delete()
     this.loading()
     const screenshot = await this.createScreenshots()
     const duration = this.convertTimeToDurationSeconds(
