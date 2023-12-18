@@ -13,23 +13,20 @@ interface InsertProps {
 }
 
 export default class Step2 {
-  target: HTMLDivElement
-  imageSrc: string | undefined
-  url: string | undefined
-  id: string | undefined
-  startTime: string | undefined
-  duration: number | undefined
-  cropData: object | undefined
-  wsClientId: string | undefined
-  $speed: HTMLSelectElement | undefined
-  $image: HTMLImageElement | undefined
-  $preview: HTMLDivElement | undefined
-  $resize: HTMLInputElement | undefined
-  $container: HTMLDivElement | undefined
+  private imageSrc?: string
+  private url?: string
+  private id?: string
+  private startTime?: string
+  private duration?: number
+  private cropData?: object
+  private wsClientId?: string
+  private $container?: HTMLElement
+  private $speed?: HTMLSelectElement
+  private $img?: HTMLImageElement
+  private $preview?: HTMLDivElement
+  private $resize?: HTMLInputElement
 
-  constructor(target: HTMLDivElement) {
-    this.target = target
-  }
+  constructor(private target: HTMLDivElement) {}
 
   insert({ imageSrc, id, startTime, duration, url, wsClientId }: InsertProps) {
     this.imageSrc = imageSrc
@@ -44,15 +41,14 @@ export default class Step2 {
   }
 
   render() {
-    this.target.innerHTML = step2Template(this.imageSrc!)
+    if (!this.imageSrc) return
+    this.target.innerHTML = step2Template(this.imageSrc)
 
-    this.$image = document.querySelector('.image') as HTMLImageElement
-    this.$preview = document.querySelector('.preview') as HTMLDivElement
-    this.$resize = document.querySelector('.resize') as HTMLInputElement
-    this.$speed = document.querySelector('.speed') as HTMLSelectElement
-    this.$container = document.querySelector(
-      '.step2-container'
-    ) as HTMLDivElement
+    this.$container = document.getElementById('step2-container')!
+    this.$img = document.getElementById('img') as HTMLImageElement
+    this.$preview = document.getElementById('preview') as HTMLDivElement
+    this.$resize = document.getElementById('resize') as HTMLInputElement
+    this.$speed = document.getElementById('speed') as HTMLSelectElement
   }
 
   delete() {
@@ -61,7 +57,7 @@ export default class Step2 {
 
   progressRender() {
     if (!this.$container) return
-    this.$container.innerHTML = progressTemplate
+    this.$container.innerHTML = progressTemplate()
   }
 
   setProgressPercent(frame: number) {
@@ -73,7 +69,8 @@ export default class Step2 {
   }
 
   setCropper(t: Step2) {
-    new Cropper(this.$image as HTMLImageElement, {
+    if (!this.$img) return
+    new Cropper(this.$img, {
       viewMode: 2,
       preview: this.$preview,
       background: false,

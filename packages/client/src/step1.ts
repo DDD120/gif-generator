@@ -2,34 +2,31 @@ import { loadingTemplate, step1Template } from './template'
 import axios from './axios'
 
 export default class Step1 {
-  target: HTMLDivElement
-  container: HTMLDivElement
-  input: HTMLInputElement
-  startTime: HTMLInputElement
-  endTime: HTMLInputElement
+  private $container: HTMLElement
+  private $url: HTMLInputElement
+  private $startTime: HTMLInputElement
+  private $endTime: HTMLInputElement
 
-  constructor(target: HTMLDivElement) {
-    this.target = target
+  constructor(private $target: HTMLDivElement) {
+    this.$target = $target
     this.render()
 
-    this.input = document.querySelector('.url-input') as HTMLInputElement
-    this.container = document.querySelector(
-      '.step1-container'
-    ) as HTMLInputElement
-    this.startTime = document.querySelector('.startTime') as HTMLInputElement
-    this.endTime = document.querySelector('.endTime') as HTMLInputElement
+    this.$container = document.getElementById('step1-container')!
+    this.$url = document.getElementById('url-input') as HTMLInputElement
+    this.$startTime = document.getElementById('start-time') as HTMLInputElement
+    this.$endTime = document.getElementById('end-time') as HTMLInputElement
   }
 
   render() {
-    this.target.innerHTML = step1Template
+    this.$target.innerHTML = step1Template()
   }
 
   delete() {
-    this.target.innerHTML = ''
+    this.$target.innerHTML = ''
   }
 
   loading() {
-    this.container.innerHTML = loadingTemplate
+    this.$container.innerHTML = loadingTemplate()
   }
 
   convertTimeToDurationSeconds(startTime: string, endTime: string): number {
@@ -45,15 +42,15 @@ export default class Step1 {
     this.loading()
     const screenshot = await this.createScreenshots()
     const duration = this.convertTimeToDurationSeconds(
-      this.startTime.value,
-      this.endTime.value
+      this.$startTime.value,
+      this.$endTime.value
     )
 
     const res = {
-      url: this.input.value,
+      url: this.$url.value,
       id: screenshot.id,
       state: screenshot.state,
-      startTime: this.startTime.value,
+      startTime: this.$startTime.value,
       duration,
       imageSrc: `data:image/png;base64,${screenshot.image}`,
     }
@@ -63,8 +60,8 @@ export default class Step1 {
 
   async createScreenshots() {
     const res = await axios.post('/screenshots', {
-      url: this.input.value,
-      startTime: this.startTime.value,
+      url: this.$url.value,
+      startTime: this.$startTime.value,
     })
 
     return res.data

@@ -1,12 +1,11 @@
 import { step3Template } from './template'
 
 export default class Step3 {
-  target: HTMLDivElement
-  url: string | undefined
+  private url?: string
+  private $download?: HTMLAnchorElement
+  private $input?: HTMLInputElement
 
-  constructor(target: HTMLDivElement) {
-    this.target = target
-  }
+  constructor(private $target: HTMLDivElement) {}
 
   insert(url: string) {
     this.url = url
@@ -14,13 +13,17 @@ export default class Step3 {
   }
 
   render() {
-    this.target.innerHTML = step3Template(this.url!)
-    const $download = document.querySelector('.download') as HTMLAnchorElement
-    const $input = document.getElementById(
+    if (!this.url) return
+    this.$target.innerHTML = step3Template(this.url)
+    this.$download = document.getElementById('download') as HTMLAnchorElement
+    this.$input = document.getElementById(
       'gif-download-filename'
     ) as HTMLInputElement
-    $input.addEventListener('change', () => {
-      $download.setAttribute('download', $input.value)
-    })
+    this.$input.addEventListener('change', this.handleFilenameChange)
+  }
+
+  handleFilenameChange() {
+    if (!this.$download || !this.$input) return
+    this.$download.setAttribute('download', this.$input.value)
   }
 }
