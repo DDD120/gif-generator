@@ -3,3 +3,4 @@ screenshots/
 .cache
 dist
 .parcel-cache
+video/
