@@ -6,6 +6,7 @@ export default class Step1 {
   private $url: HTMLInputElement
   private $startTime: HTMLInputElement
   private $endTime: HTMLInputElement
+  private $vidoeURL: HTMLFormElement
 
   constructor(private $target: HTMLDivElement) {
     this.$target = $target
@@ -15,6 +16,9 @@ export default class Step1 {
     this.$url = document.getElementById('url-input') as HTMLInputElement
     this.$startTime = document.getElementById('start-time') as HTMLInputElement
     this.$endTime = document.getElementById('end-time') as HTMLInputElement
+    this.$vidoeURL = document.getElementById('video-radio') as HTMLFormElement
+
+    this.$vidoeURL.addEventListener('change', this.onRadioChange)
   }
 
   render() {
@@ -36,6 +40,21 @@ export default class Step1 {
       parseInt(time[0]) * 3600 + parseInt(time[1]) * 60 + parseInt(time[2])
 
     return getTotalSeconds(eTime) - getTotalSeconds(sTime)
+  }
+
+  onRadioChange(e: Event) {
+    const $urlInput = document.getElementById('video-url') as HTMLInputElement
+    const $fileUpload = document.getElementById(
+      'file-upload'
+    ) as HTMLInputElement
+
+    if ((e.target as HTMLInputElement).value === 'video-url-radio') {
+      $urlInput.style.display = 'block'
+      $fileUpload.style.display = 'none'
+    } else {
+      $urlInput.style.display = 'none'
+      $fileUpload.style.display = 'block'
+    }
   }
 
   async onButtonClick() {
