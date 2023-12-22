@@ -1,10 +1,10 @@
+interface State {
+  insert: 'inner' | 'append'
+  [key: string]: any
+}
+
 export default class Component {
-  constructor(
-    protected $target: Element,
-    protected state?: any,
-    protected props?: any
-  ) {
-    this.$target = $target
+  constructor(protected $target: Element, protected state: State) {
     this.setup()
     this.render()
   }
@@ -14,7 +14,14 @@ export default class Component {
     return ''
   }
   render() {
-    this.$target.innerHTML = this.template()
+    if (this.state.insert === 'inner') {
+      this.$target.innerHTML = this.template()
+    } else if (this.state.insert === 'append') {
+      const template = document.createElement('template')
+      template.innerHTML = this.template()
+      this.$target.appendChild(template.content)
+    }
+
     this.setEvent()
     this.mounted()
   }
