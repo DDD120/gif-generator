@@ -1,6 +1,12 @@
 import Component from '../core/Component'
+import { observe } from '../core/observer'
 
 export default class Layout extends Component {
+  setup(): void {
+    observe(() => {
+      this.render()
+    })
+  }
   template(): string {
     return `
           <div class="flex flex-col items-center justify-center py-8">
