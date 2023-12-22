@@ -1,7 +1,14 @@
 import Component from '../../core/Component'
+import Stepper from '../Stepper'
 
 export default class Step3 extends Component {
-  template(): string {
-    return `Step3`
+  template() {
+    return `
+      <div id="stepper" class="mb-8"></div>
+    `
+  }
+  mounted() {
+    const $stepper = document.querySelector('#stepper')!
+    new Stepper($stepper)
   }
 }
