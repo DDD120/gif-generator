@@ -1,10 +1,10 @@
-interface State {
+export interface State {
   insert: 'inner' | 'append'
   [key: string]: any
 }
 
-export default class Component {
-  constructor(protected $target: Element, protected state: State) {
+export default class Component<T = {}> {
+  constructor(protected $target: Element, protected state: State & T) {
     this.setup()
     this.render()
   }
@@ -28,6 +28,5 @@ export default class Component {
   setEvent() {}
   setState(newState: any) {
     this.state = { ...this.state, ...newState }
-    this.render()
   }
 }

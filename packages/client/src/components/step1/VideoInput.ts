@@ -1,6 +1,17 @@
-import Component from '../../core/Component'
+import Component, { State } from '../../core/Component'
 
-export default class VideoInput extends Component {
+interface VideoInputState extends State {
+  updateState: (state: { [key: string]: any }) => void
+  $urlInput?: HTMLInputElement
+}
+
+export default class VideoInput extends Component<VideoInputState> {
+  mounted() {
+    const $urlInput = document.getElementById('video-url') as HTMLInputElement
+    this.setState({ $urlInput })
+    this.state.updateState({ url: $urlInput.value })
+  }
+
   template() {
     return `
       <form id="video-radio" class="flex gap-2 mb-4">
@@ -23,20 +34,21 @@ export default class VideoInput extends Component {
   setEvent() {
     this.$target
       .querySelector('#video-radio')
-      ?.addEventListener('change', this.handleChange)
+      ?.addEventListener('change', this.handleChange.bind(this))
   }
 
   handleChange(e: Event) {
-    const $urlInput = document.getElementById('video-url') as HTMLInputElement
+    const { $urlInput } = this.state
     const $fileUpload = document.getElementById(
       'file-upload'
     ) as HTMLInputElement
 
     if ((e.target as HTMLInputElement).value === 'video-url-radio') {
-      $urlInput.style.display = 'block'
+      $urlInput!.style.display = 'block'
       $fileUpload.style.display = 'none'
+      this.state.updateState({ url: $urlInput!.value })
     } else {
-      $urlInput.style.display = 'none'
+      $urlInput!.style.display = 'none'
       $fileUpload.style.display = 'block'
     }
   }

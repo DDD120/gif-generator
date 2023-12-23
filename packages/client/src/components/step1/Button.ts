@@ -1,4 +1,5 @@
 import Component from '../../core/Component'
+import api from '../../api/api'
 
 export default class Button extends Component {
   template() {
@@ -10,10 +11,26 @@ export default class Button extends Component {
   setEvent() {
     this.$target
       .querySelector('#step1-button')!
-      .addEventListener('click', this.handleClick)
+      .addEventListener('click', this.handleClick.bind(this))
   }
 
-  async handleClick() {}
+  mounted() {}
 
-  async createScreenshots() {}
+  async handleClick() {
+    console.log(this.state)
+    // cwait this.createScreenshots()
+  }
+
+  async createScreenshots() {
+    const res = await api
+      .post('/screenshots', {
+        json: {
+          url: this.state.url,
+          startTime: this.state.startTime,
+        },
+      })
+      .json()
+
+    return res
+  }
 }
