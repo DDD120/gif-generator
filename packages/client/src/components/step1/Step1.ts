@@ -1,16 +1,16 @@
-import Component, { State } from '../../core/Component'
+import Component from '../../core/Component'
 import Stepper from '../Stepper'
 import Button from './Button'
 import TimeInput from './TimeInput'
 import VideoInput from './VideoInput'
 
-interface Step1State extends State {
+interface Step1State {
   url: string
   startTime: string
   endTime: string
 }
 
-export default class Step1 extends Component<Step1State> {
+export default class Step1 extends Component<{}, Step1State> {
   template() {
     return `
       <div id="stepper" class="mb-8"></div>

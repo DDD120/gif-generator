@@ -1,15 +1,18 @@
-import Component, { State } from '../../core/Component'
+import Component from '../../core/Component'
 
-interface VideoInputState extends State {
+interface Props {
   updateState: (state: { [key: string]: any }) => void
-  $urlInput?: HTMLInputElement
 }
 
-export default class VideoInput extends Component<VideoInputState> {
+interface State {
+  $urlInput: HTMLInputElement
+}
+
+export default class VideoInput extends Component<Props, State> {
   mounted() {
     const $urlInput = document.getElementById('video-url') as HTMLInputElement
     this.setState({ $urlInput })
-    this.state.updateState({ url: $urlInput.value })
+    this.props.updateState({ url: $urlInput.value })
   }
 
   template() {
@@ -46,7 +49,7 @@ export default class VideoInput extends Component<VideoInputState> {
     if ((e.target as HTMLInputElement).value === 'video-url-radio') {
       $urlInput!.style.display = 'block'
       $fileUpload.style.display = 'none'
-      this.state.updateState({ url: $urlInput!.value })
+      this.props.updateState({ url: $urlInput!.value })
     } else {
       $urlInput!.style.display = 'none'
       $fileUpload.style.display = 'block'

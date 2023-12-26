@@ -1,17 +1,20 @@
 import Component from '../../core/Component'
 
-interface TimeInputState {
-  $startTime?: HTMLInputElement
-  $endTime?: HTMLInputElement
+interface Props {
   updateState: (state: { [key: string]: any }) => void
 }
 
-export default class TimeInput extends Component<TimeInputState> {
+interface State {
+  $startTime?: HTMLInputElement
+  $endTime?: HTMLInputElement
+}
+
+export default class TimeInput extends Component<Props, State> {
   mounted() {
     const $startTime = document.querySelector('#start-time') as HTMLInputElement
     const $endTime = document.querySelector('#end-time') as HTMLInputElement
     this.setState({ $startTime, $endTime })
-    this.state.updateState({
+    this.props.updateState({
       startTime: $startTime.value,
       endTime: $endTime.value,
     })
@@ -44,11 +47,11 @@ export default class TimeInput extends Component<TimeInputState> {
   handleChange(e: Event) {
     const { $startTime, $endTime } = this.state
     if ((e.target as HTMLInputElement).id === 'start-time') {
-      this.state.this.state.updateState({
+      this.props.updateState({
         startTime: $startTime?.value,
       })
     } else {
-      this.state.updateState({ endTime: $endTime?.value })
+      this.props.updateState({ endTime: $endTime?.value })
     }
   }
 }

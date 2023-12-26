@@ -20,9 +20,9 @@ export default class Layout extends Component {
   mounted() {
     const $container = document.querySelector('#container') as HTMLDivElement
     observe(() => {
-      if (store.step === 1) {
+      if (store.state.step === 1) {
         new Step1($container, { insert: 'inner' })
-      } else if (store.step === 2) {
+      } else if (store.state.step === 2) {
         new Step2($container, { insert: 'inner' })
       } else {
         new Step3($container, { insert: 'inner' })
