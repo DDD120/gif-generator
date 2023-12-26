@@ -24,7 +24,6 @@ export const observable = (obj: ObservableObject) => {
       },
 
       set(value) {
-        console.log('set')
         _value = value
         observers.forEach((fn) => fn())
       },

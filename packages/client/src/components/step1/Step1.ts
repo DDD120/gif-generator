@@ -37,6 +37,7 @@ export default class Step1 extends Component<{}, Step1State> {
       insert: 'append',
       url: this.state.url,
       startTime: this.state.startTime,
+      endTime: this.state.endTime
     })
   }
 

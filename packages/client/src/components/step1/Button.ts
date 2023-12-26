@@ -1,9 +1,19 @@
 import Component from '../../core/Component'
 import api from '../../api/api'
+import { store } from '../../store/store'
 
 interface Props {
   url: string
   startTime: string
+  endTime: string
+}
+
+interface Response {
+  state: 'success' | 'fail'
+  data: {
+    id: string
+    image: string
+  }
 }
 
 export default class Button extends Component<Props> {
@@ -19,22 +29,42 @@ export default class Button extends Component<Props> {
       .addEventListener('click', this.handleClick.bind(this))
   }
 
-  mounted() {}
-
   async handleClick() {
-    const a = await this.createScreenshots()
+    const screenshot = await this.createScreenshots()
+    if (screenshot.state === 'success') {
+      const { id, image } = screenshot.data
+      const { startTime, endTime, url } = this.props
+
+      store.setState({
+        step: 2,
+        url,
+        id,
+        startTime,
+        duration: this.getDuration(startTime, endTime),
+        imageSrc: `data:image/png;base64,${image}`,
+      })
+    }
   }
 
   async createScreenshots() {
-    const res = await api
+    const res = (await api
       .post('screenshots', {
         json: {
           url: this.props.url,
           startTime: this.props.startTime,
         },
       })
-      .json()
+      .json()) as Response
 
     return res
+  }
+
+  getDuration(startTime: string, endTime: string): number {
+    const sTime = startTime.split(':')
+    const eTime = endTime.split(':')
+    const getTotalSeconds = (time: string[]) =>
+      parseInt(time[0]) * 3600 + parseInt(time[1]) * 60 + parseInt(time[2])
+
+    return getTotalSeconds(eTime) - getTotalSeconds(sTime)
   }
 }
