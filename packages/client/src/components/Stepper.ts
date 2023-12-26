@@ -6,10 +6,10 @@ export default class Stepper extends Component {
     return `
     <ol class="flex-wrap gap-2 flex justify-center items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">
         <li class="flex justify-center items-center ${
-          store.step === 1 && 'text-blue-600 dark:text-blue-500'
+          store.state.step === 1 && 'text-blue-600 dark:text-blue-500'
         }">
             <div class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0  ${
-              store.step === 1
+              store.state.step === 1
                 ? 'dark:border-blue-500 border-blue-600'
                 : 'border-gray-500 dark:border-gray-400'
             }">
@@ -21,10 +21,10 @@ export default class Stepper extends Component {
             </svg>
         </li>
         <li class="flex items-center ${
-          store.step === 2 && 'text-blue-600 dark:text-blue-500'
+          store.state.step === 2 && 'text-blue-600 dark:text-blue-500'
         }">
             <div class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0  ${
-              store.step === 2
+              store.state.step === 2
                 ? 'dark:border-blue-500 border-blue-600'
                 : 'border-gray-500 dark:border-gray-400'
             }">
@@ -36,10 +36,10 @@ export default class Stepper extends Component {
             </svg>
         </li>
         <li class="flex items-center ${
-          store.step === 3 && 'text-blue-600 dark:text-blue-500'
+          store.state.step === 3 && 'text-blue-600 dark:text-blue-500'
         }">
             <div class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0  ${
-              store.step === 3
+              store.state.step === 3
                 ? 'dark:border-blue-500 border-blue-600'
                 : 'border-gray-500 dark:border-gray-400'
             }">
