@@ -43,9 +43,11 @@ app.post('/screenshots', (req, res) => {
     .on('end', () => {
       const files = fs.readdirSync(dir)
       return res.json({
-        id,
         state: 'success',
-        image: toBase64(`${dir}/${files[0]}`),
+        data: {
+          id,
+          image: toBase64(`${dir}/${files[0]}`),
+        },
       })
     })
 })

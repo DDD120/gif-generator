@@ -17,13 +17,13 @@ export default class Button extends Component {
   mounted() {}
 
   async handleClick() {
-    console.log(this.state)
-    // cwait this.createScreenshots()
+    const a = await this.createScreenshots()
+    console.log(a)
   }
 
   async createScreenshots() {
     const res = await api
-      .post('/screenshots', {
+      .post('screenshots', {
         json: {
           url: this.state.url,
           startTime: this.state.startTime,
