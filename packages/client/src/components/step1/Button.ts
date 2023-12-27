@@ -1,11 +1,13 @@
 import Component from '../../core/Component'
 import api from '../../api/api'
 import { store } from '../../store/store'
+import { Step1State } from './Step1'
 
 interface Props {
   url: string
   startTime: string
   endTime: string
+  updateState: (state: Partial<Step1State>) => void
 }
 
 interface Response {
@@ -30,11 +32,13 @@ export default class Button extends Component<Props> {
   }
 
   async handleClick() {
+    this.props.updateState({ loading: true })
     const screenshot = await this.createScreenshots()
     if (screenshot.state === 'success') {
+      this.props.updateState({ loading: false })
+
       const { id, image } = screenshot.data
       const { startTime, endTime, url } = this.props
-
       store.setState({
         step: 2,
         url,

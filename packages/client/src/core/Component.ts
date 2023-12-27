@@ -6,8 +6,12 @@ export default class Component<T = {}, S = {}> {
   protected state!: S
 
   constructor(protected $target: Element, protected props: Props & T) {
+    this.setup()
     this.render()
+    this.setEvent()
   }
+
+  setup() {}
 
   mounted() {}
   template() {
@@ -22,11 +26,11 @@ export default class Component<T = {}, S = {}> {
       this.$target.appendChild(template.content)
     }
 
-    this.setEvent()
     this.mounted()
   }
   setEvent() {}
   setState(newState: any) {
     this.state = { ...this.state, ...newState }
+    this.render()
   }
 }

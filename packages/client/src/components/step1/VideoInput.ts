@@ -1,21 +1,26 @@
 import Component from '../../core/Component'
+import { Step1State } from './Step1'
 
 interface Props {
-  updateState: (state: { [key: string]: any }) => void
+  url: string
+  updateState: (state: Partial<Step1State>) => void
 }
 
 interface State {
-  $urlInput: HTMLInputElement
+  currentType: 'url' | 'file'
 }
 
 export default class VideoInput extends Component<Props, State> {
-  mounted() {
-    const $urlInput = document.getElementById('video-url') as HTMLInputElement
-    this.setState({ $urlInput })
-    this.props.updateState({ url: $urlInput.value })
+  setup() {
+    this.state = {
+      currentType: 'url',
+    }
   }
 
   template() {
+    const { url } = this.props
+    const { currentType } = this.state
+
     return `
       <form id="video-radio" class="flex gap-2 mb-4">
         <div class="flex-1 flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
@@ -28,8 +33,11 @@ export default class VideoInput extends Component<Props, State> {
         </div>
       </form>
       <div class="mb-6">
-        <input id="video-url" value="./video/abc.mp4" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <input id="file-upload" accept="video/mp4,video/x-m4v,video/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"  type="file" style="display: none;" />
+        ${
+          currentType === 'url'
+            ? `<input id='video-url' value=${url} type='text' class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>`
+            : "<input id='file-upload' accept='video/mp4,video/x-m4v,video/*' class='block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400' type='file' />"
+        }
       </div>
     `
   }
@@ -41,18 +49,14 @@ export default class VideoInput extends Component<Props, State> {
   }
 
   handleChange(e: Event) {
-    const { $urlInput } = this.state
-    const $fileUpload = document.getElementById(
-      'file-upload'
-    ) as HTMLInputElement
-
-    if ((e.target as HTMLInputElement).value === 'video-url-radio') {
-      $urlInput!.style.display = 'block'
-      $fileUpload.style.display = 'none'
-      this.props.updateState({ url: $urlInput!.value })
+    const input = e.target as HTMLInputElement
+    if (input.value === 'video-url-radio') {
+      this.setState({ currentType: 'url' })
+      this.props.updateState({ url: input.value })
     } else {
-      $urlInput!.style.display = 'none'
-      $fileUpload.style.display = 'block'
+      this.setState({
+        currentType: 'file',
+      })
     }
   }
 }
