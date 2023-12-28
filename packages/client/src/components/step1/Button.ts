@@ -40,12 +40,12 @@ export default class Button extends Component<Props> {
       const { id, image } = screenshot.data
       const { startTime, endTime, url } = this.props
       store.setState({
-        step: 2,
         url,
         id,
         startTime,
         duration: this.getDuration(startTime, endTime),
-        imageSrc: `data:image/png;base64,${image}`,
+        screenshot: `data:image/png;base64,${image}`,
+        step: 2,
       })
     }
   }

@@ -2,19 +2,17 @@ import { observable } from '../core/observer.ts'
 
 export const store = {
   state: observable({
-    step: 1,
+    step: 2,
     url: '',
-    id: '',
-    state: '',
+    id: '0c21cec7-0b11-4a11-ae84-6403d42ba159',
     startTime: '',
     duration: 0,
     screenshot: '',
   }),
 
   setState(newState: { [key: string]: any }) {
-    for (const [key, value] of Object.entries(newState)) {
-      if (!this.state[key]) continue
-      this.state[key] = value
+    for (let key in newState) {
+      this.state[key] = newState[key]
     }
   },
 }
