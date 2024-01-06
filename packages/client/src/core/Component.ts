@@ -2,8 +2,9 @@ export interface Props {
   insert: 'inner' | 'append'
 }
 
-export default class Component<T = {}, S = {}> {
+export default class Component<T = {}, S = {}, R = {}> {
   protected state!: S
+  protected ref!: R
 
   constructor(protected $target: Element, protected props: Props & T) {
     this.setup()
@@ -14,6 +15,7 @@ export default class Component<T = {}, S = {}> {
   setup() {}
 
   mounted() {}
+
   template() {
     return ''
   }
@@ -32,5 +34,8 @@ export default class Component<T = {}, S = {}> {
   setState(newState: any) {
     this.state = { ...this.state, ...newState }
     this.render()
+  }
+  setRef(newRef: any) {
+    this.ref = { ...this.ref, ...newRef }
   }
 }

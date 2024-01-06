@@ -2,19 +2,15 @@ import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
 import Component from '../../core/Component'
 import { store } from '../../store/store'
+import { Step2Ref, Step2State } from './Step2'
 
-interface State {
-  cropData: Cropper.Data | undefined
+interface Props {
+  updateState: (state: Partial<Step2State>) => void
+  updateRef: (ref: Partial<Step2Ref>) => void
 }
 
-export default class Crop extends Component<{}, State> {
-  setup() {
-    this.state = {
-      cropData: undefined,
-    }
-  }
-
-  mounted(): void {
+export default class Crop extends Component<Props> {
+  mounted() {
     this.setCropper(this)
   }
 
@@ -31,7 +27,7 @@ export default class Crop extends Component<{}, State> {
         <h3 class="text-xl font-bold dark:text-white mb-2">프리뷰</h3>
         <div id="preview" class="w-[420px] h-[420px] overflow-hidden bg-slate-400 [&>*]:w-full"></div>
       </div>
-      <hr />
+      <hr class="my-2" />
     `
   }
 
@@ -44,7 +40,7 @@ export default class Crop extends Component<{}, State> {
       background: false,
       zoomable: false,
       crop(e) {
-        t.state.cropData = e.detail
+        t.props.updateRef({ cropData: e.detail })
       },
     })
   }
