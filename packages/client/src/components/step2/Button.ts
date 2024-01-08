@@ -1,12 +1,14 @@
 import Component from '../../core/Component'
 import { store } from '../../store/store'
 import api from '../../api/api'
+import { Step2State } from './Step2'
 
 interface Props {
   cropData: Cropper.Data | undefined
   resizeWidth: string
   speed: string
   wsClientId: string
+  updateState: (state: Partial<Step2State>) => void
 }
 
 export default class Button extends Component<Props> {
@@ -23,9 +25,11 @@ export default class Button extends Component<Props> {
   }
 
   async handleClick() {
-    console.log(this.props)
     if (!this.props.cropData) return
+    this.props.updateState({ loading: true })
     await this.createGIF()
+    const src = await this.getGIF()
+    store.setState({ step: 3, imgSrc: src })
   }
 
   async createGIF() {
@@ -46,8 +50,15 @@ export default class Button extends Component<Props> {
       })
       .json()
 
-    console.log(res)
+    return res
+  }
 
-    return
+  async getGIF() {
+    const { id } = store.state
+    const res = await api.get(`gif/${id}`).blob()
+    const url = window.URL.createObjectURL(
+      new Blob([res], { type: 'image/gif' })
+    )
+    return url
   }
 }

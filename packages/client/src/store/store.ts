@@ -8,6 +8,7 @@ export const store = {
     startTime: '',
     duration: 0,
     screenshot: '',
+    imgSrc: '',
   }),
 
   setState(newState: { [key: string]: any }) {

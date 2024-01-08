@@ -4,12 +4,15 @@ import Stepper from '../Stepper'
 import Button from './Button'
 import Crop from './Crop'
 import Options from './Options'
+import Progress from './Progress'
 
 export interface Step2State {
   resizeWidth: string
   speed: string
   wsClientId: string
   socket: WebSocket
+  loading: boolean
+  percent: number
 }
 
 export interface Step2Ref {
@@ -23,6 +26,8 @@ export default class Step2 extends Component<{}, Step2State, Step2Ref> {
       speed: '1',
       wsClientId: '',
       socket: new WebSocket('ws://localhost:4000'),
+      loading: false,
+      percent: 0,
     }
     this.ref = {
       cropData: undefined,
@@ -48,27 +53,35 @@ export default class Step2 extends Component<{}, Step2State, Step2Ref> {
   mounted() {
     const $stepper = this.$target.querySelector('#stepper')!
     const $container = this.$target.querySelector('#step2-container')!
-    const { resizeWidth, speed, wsClientId } = this.state
+    const { resizeWidth, speed, wsClientId, loading, percent } = this.state
     const { cropData } = this.ref
-    
-    new Stepper($stepper, { insert: 'inner' })
-    new Crop($container, {
-      insert: 'append',
-      updateState: this.updateState.bind(this),
-      updateRef: this.updateRef.bind(this),
-    })
-    new Options($container, {
-      insert: 'append',
-      resizeWidth: this.state.resizeWidth,
-      updateState: this.updateState.bind(this),
-    })
-    new Button($container, {
-      insert: 'append',
-      cropData,
-      resizeWidth,
-      speed,
-      wsClientId,
-    })
+
+    if (loading) {
+      new Progress($container, {
+        insert: 'inner',
+        percent: String(percent),
+      })
+    } else {
+      new Stepper($stepper, { insert: 'inner' })
+      new Crop($container, {
+        insert: 'append',
+        updateState: this.updateState.bind(this),
+        updateRef: this.updateRef.bind(this),
+      })
+      new Options($container, {
+        insert: 'append',
+        resizeWidth: this.state.resizeWidth,
+        updateState: this.updateState.bind(this),
+      })
+      new Button($container, {
+        insert: 'append',
+        cropData,
+        resizeWidth,
+        speed,
+        wsClientId,
+        updateState: this.updateState.bind(this),
+      })
+    }
   }
 
   updateState(state: Partial<Step2State>) {
