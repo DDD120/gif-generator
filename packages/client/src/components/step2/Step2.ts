@@ -5,6 +5,7 @@ import Button from './Button'
 import Crop from './Crop'
 import Options from './Options'
 import Progress from './Progress'
+import { store } from '../../store/store'
 
 export interface Step2State {
   resizeWidth: string
@@ -12,11 +13,11 @@ export interface Step2State {
   wsClientId: string
   socket: WebSocket
   loading: boolean
-  percent: number
 }
 
 export interface Step2Ref {
   cropData: Cropper.Data | undefined
+  frame: string
 }
 
 export default class Step2 extends Component<{}, Step2State, Step2Ref> {
@@ -27,18 +28,22 @@ export default class Step2 extends Component<{}, Step2State, Step2Ref> {
       wsClientId: '',
       socket: new WebSocket('ws://localhost:4000'),
       loading: false,
-      percent: 0,
     }
     this.ref = {
       cropData: undefined,
+      frame: '0',
     }
   }
 
   setEvent() {
-    const { socket, wsClientId } = this.state
-    socket.addEventListener('message', (event) => {
-      if (!wsClientId) this.setState({ wsClientId: event.data })
-    })
+    const { socket } = this.state
+    socket.addEventListener('message', this.onMessage.bind(this))
+  }
+
+  onMessage(event: MessageEvent) {
+    const { wsClientId } = this.state
+    if (!wsClientId) this.updateState({ wsClientId: event.data })
+    else this.updateRef({ frame: event.data })
   }
 
   template() {
@@ -53,13 +58,12 @@ export default class Step2 extends Component<{}, Step2State, Step2Ref> {
   mounted() {
     const $stepper = this.$target.querySelector('#stepper')!
     const $container = this.$target.querySelector('#step2-container')!
-    const { resizeWidth, speed, wsClientId, loading, percent } = this.state
+    const { resizeWidth, speed, wsClientId, loading } = this.state
     const { cropData } = this.ref
 
     if (loading) {
       new Progress($container, {
         insert: 'inner',
-        percent: String(percent),
       })
     } else {
       new Stepper($stepper, { insert: 'inner' })
@@ -90,5 +94,20 @@ export default class Step2 extends Component<{}, Step2State, Step2Ref> {
 
   updateRef(ref: Partial<Step2Ref>) {
     this.setRef(ref)
+    if (ref.frame) this.updateProgress()
+  }
+
+  updateProgress() {
+    const percent = this.setPercent(this.ref.frame)
+    const $text = this.$target.querySelector('.text') as HTMLDivElement
+    const $fill = this.$target.querySelector('.fill') as HTMLDivElement
+    $text.textContent = percent + '%'
+    $fill.style.width = percent + '%'
+  }
+
+  setPercent(frame: string) {
+    const { duration } = store.state
+    const percent = ((Number(frame) / (30 * (duration ?? 1))) * 100).toFixed(0)
+    return percent
   }
 }
