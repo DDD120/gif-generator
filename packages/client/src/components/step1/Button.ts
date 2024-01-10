@@ -4,7 +4,7 @@ import { store } from '../../store/store'
 import { Step1State } from './Step1'
 
 interface Props {
-  url: string
+  requestUrl: string
   startTime: string
   endTime: string
   updateState: (state: Partial<Step1State>) => void
@@ -32,15 +32,15 @@ export default class Button extends Component<Props> {
   }
 
   async handleClick() {
-    this.props.updateState({ loading: true })
+    const { startTime, endTime, requestUrl, updateState } = this.props
+
+    updateState({ loading: true })
     const screenshot = await this.createScreenshots()
     if (screenshot.state === 'success') {
-      this.props.updateState({ loading: false })
-
+      updateState({ loading: false })
       const { id, image } = screenshot.data
-      const { startTime, endTime, url } = this.props
       store.setState({
-        url,
+        requestUrl,
         id,
         startTime,
         duration: this.getDuration(startTime, endTime),
@@ -51,11 +51,12 @@ export default class Button extends Component<Props> {
   }
 
   async createScreenshots() {
+    const { requestUrl, startTime } = this.props
     const res = (await api
       .post('screenshots', {
         json: {
-          url: this.props.url,
-          startTime: this.props.startTime,
+          url: requestUrl,
+          startTime,
         },
       })
       .json()) as Response

@@ -3,10 +3,11 @@ import Stepper from '../Stepper'
 import Button from './Button'
 import Loading from './Loading'
 import TimeInput from './TimeInput'
-import VideoInput from './VideoInput'
+import RequestTypeInput from './RequestTypeInput'
 
 export interface Step1State {
-  url: string
+  requestUrl: string
+  currentType: 'url' | 'file'
   startTime: string
   endTime: string
   loading: boolean
@@ -15,7 +16,8 @@ export interface Step1State {
 export default class Step1 extends Component<{}, Step1State> {
   setup() {
     this.state = {
-      url: './video/abc.mp4',
+      requestUrl: './video/abc.mp4',
+      currentType: 'url',
       startTime: '00:00:01',
       endTime: '00:00:02',
       loading: false,
@@ -26,37 +28,39 @@ export default class Step1 extends Component<{}, Step1State> {
     return `
       <div id="stepper" class="mb-8"></div>
       <section id="step1-wrapper" class="w-full flex justify-center items-center">
-        <div id="step1-form" class="w-full"></div>
+        <div id="request-form" class="w-full">
+          <div id="request-type-input"></div>
+          <div id="time-input"></div>
+          <div id="button-wrapper"></div>
+        </div>
       </section>
     `
   }
 
   mounted() {
-    const $wrapper = this.$target.querySelector('#step1-wrapper')!
     const $stepper = this.$target.querySelector('#stepper')!
-    const $form = this.$target.querySelector('#step1-form')!
-    const { url, startTime, endTime, loading } = this.state
+    const $wrapper = this.$target.querySelector('#step1-wrapper')!
+    const $requestTypeInput = $wrapper.querySelector('#request-type-input')!
+    const $timeInput = $wrapper.querySelector('#time-input')!
+    const $buttonWrapper = $wrapper.querySelector('#button-wrapper')!
+    const { requestUrl, currentType, loading, startTime, endTime } = this.state
 
     if (loading) {
-      new Loading($wrapper, {
-        insert: 'inner',
-      })
+      new Loading($wrapper, {})
     } else {
-      new Stepper($stepper, { insert: 'inner' })
-      new VideoInput($form, {
-        insert: 'append',
-        url,
+      new Stepper($stepper, {})
+      new RequestTypeInput($requestTypeInput, {
+        requestUrl,
+        currentType,
         updateState: this.updateState.bind(this),
       })
-      new TimeInput($form, {
-        insert: 'append',
+      new TimeInput($timeInput, {
         startTime,
         endTime,
         updateState: this.updateState.bind(this),
       })
-      new Button($form, {
-        insert: 'append',
-        url,
+      new Button($buttonWrapper, {
+        requestUrl,
         startTime,
         endTime,
         updateState: this.updateState.bind(this),

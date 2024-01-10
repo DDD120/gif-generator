@@ -1,15 +1,10 @@
-export interface Props {
-  insert: 'inner' | 'append'
-}
-
 export default class Component<T = {}, S = {}, R = {}> {
   protected state!: S
   protected ref!: R
 
-  constructor(protected $target: Element, protected props: Props & T) {
+  constructor(protected $target: Element, protected props: T) {
     this.setup()
     this.render()
-    this.setEvent()
   }
 
   setup() {}
@@ -20,15 +15,9 @@ export default class Component<T = {}, S = {}, R = {}> {
     return ''
   }
   render() {
-    if (this.props.insert === 'inner') {
-      this.$target.innerHTML = this.template()
-    } else if (this.props.insert === 'append') {
-      const template = document.createElement('template')
-      template.innerHTML = this.template()
-      this.$target.appendChild(template.content)
-    }
-
+    this.$target.innerHTML = this.template()
     this.mounted()
+    this.setEvent()
   }
   setEvent() {}
   setState(newState: any) {

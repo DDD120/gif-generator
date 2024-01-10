@@ -27,11 +27,11 @@ export default class TimeInput extends Component<Props> {
 
   setEvent() {
     this.$target
-      .querySelector('#start-time')
-      ?.addEventListener('change', this.handleChange.bind(this))
+      .querySelector('#start-time')!
+      .addEventListener('change', this.handleChange.bind(this))
     this.$target
-      .querySelector('#end-time')
-      ?.addEventListener('change', this.handleChange.bind(this))
+      .querySelector('#end-time')!
+      .addEventListener('change', this.handleChange.bind(this))
   }
 
   handleChange(e: Event) {
