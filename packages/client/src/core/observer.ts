@@ -1,9 +1,5 @@
 type ObserverFunction = () => void
 
-interface ObservableObject {
-  [key: string]: any
-}
-
 let currentObserver: ObserverFunction | null = null
 
 const debounceFrame = (callback: ObserverFunction) => {
@@ -20,9 +16,9 @@ export const observe = (fn: ObserverFunction) => {
   currentObserver = null
 }
 
-export const observable = (obj: ObservableObject) => {
-  Object.keys(obj).forEach((key) => {
-    let _value = obj[key]
+export const observable = <T>(obj: T) => {
+  Object.keys(obj as object).forEach((key) => {
+    let _value = obj[key as keyof T]
     const observers = new Set<ObserverFunction>()
 
     Object.defineProperty(obj, key, {
