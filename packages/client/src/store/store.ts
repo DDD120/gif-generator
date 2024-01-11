@@ -1,6 +1,7 @@
 import { observable } from '../core/observer.ts'
 
 interface State {
+  [key: string]: any
   step: number
   requestUrl: string
   id: string
@@ -22,15 +23,8 @@ export const store = {
   }),
 
   setState(newState: Partial<State>) {
-    const keysToUpdate = Object.keys(newState).filter(
-      (key) => key in this.state
-    )
-    this.state = {
-      ...this.state,
-      ...keysToUpdate.reduce(
-        (acc, key) => ({ ...acc, [key]: newState[key as keyof State] }),
-        {}
-      ),
+    for (let key in newState) {
+      this.state[key] = newState[key]
     }
   },
 }
