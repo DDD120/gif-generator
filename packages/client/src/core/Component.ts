@@ -1,8 +1,8 @@
 export default class Component<T = {}, S = {}, R = {}> {
-  protected state!: S
-  protected ref!: R
+  public state!: S
+  public ref!: R
 
-  constructor(protected $target: Element, protected props: T) {
+  constructor(protected $target: Element, public props: T) {
     this.setup()
     this.render()
   }

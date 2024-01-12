@@ -2,10 +2,9 @@ import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
 import Component from '../../core/Component'
 import { store } from '../../store/store'
-import { Step2Ref, Step2State } from './Step2'
+import { Step2Ref } from './Step2'
 
 interface Props {
-  updateState: (state: Partial<Step2State>) => void
   updateRef: (ref: Partial<Step2Ref>) => void
 }
 
@@ -20,7 +19,7 @@ export default class Crop extends Component<Props> {
         <div class="my-4">
         <h2 class="text-2xl font-bold dark:text-white mb-2">자르기</h2>
         <div>
-          <img id="img" src=${store.state.screenshot} alt="스크린샷" />
+          <img id="img" src="${store.state.screenshot}" alt="스크린샷" />
         </div>
       </div>
       <div class="my-4">
@@ -40,7 +39,15 @@ export default class Crop extends Component<Props> {
       background: false,
       zoomable: false,
       crop(e) {
-        t.props.updateRef({ cropData: e.detail })
+        const { x, y, width, height } = e.detail
+        t.props.updateRef({
+          cropData: {
+            x,
+            y,
+            width,
+            height,
+          },
+        })
       },
     })
   }

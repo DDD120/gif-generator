@@ -1,4 +1,3 @@
-import Cropper from 'cropperjs'
 import Component from '../../core/Component'
 import Stepper from '../Stepper'
 import Button from './Button'
@@ -8,41 +7,48 @@ import Progress from './Progress'
 import { store } from '../../store/store'
 
 export interface Step2State {
-  resizeWidth: string
-  speed: string
-  wsClientId: string
-  socket: WebSocket
   loading: boolean
 }
 
+export interface CropData {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
 export interface Step2Ref {
-  cropData: Cropper.Data | undefined
+  resizeWidth: string
+  speed: number
+  wsClientId: string
+  socket: WebSocket
+  cropData: CropData | undefined
   frame: string
 }
 
 export default class Step2 extends Component<{}, Step2State, Step2Ref> {
   setup() {
     this.state = {
-      resizeWidth: '500',
-      speed: '1',
-      wsClientId: '',
-      socket: new WebSocket('ws://localhost:4000'),
       loading: false,
     }
     this.ref = {
+      wsClientId: '',
+      socket: new WebSocket('ws://localhost:4000'),
+      resizeWidth: '500',
+      speed: 1,
       cropData: undefined,
       frame: '0',
     }
   }
 
   setEvent() {
-    const { socket } = this.state
+    const { socket } = this.ref
     socket.addEventListener('message', this.onMessage.bind(this))
   }
 
   onMessage(event: MessageEvent) {
-    const { wsClientId } = this.state
-    if (!wsClientId) this.updateState({ wsClientId: event.data })
+    const { wsClientId } = this.ref
+    if (!wsClientId) this.updateRef({ wsClientId: event.data })
     else this.updateRef({ frame: event.data })
   }
 
@@ -50,7 +56,11 @@ export default class Step2 extends Component<{}, Step2State, Step2Ref> {
     return `
       <div id="stepper" class="mb-8"></div>
       <section id="step2-wrapper" class="w-full flex justify-center items-center">
-        <div id="step2-container" class="w-full"></div>
+        <div id="step2-container" class="w-full">
+          <div id="crop"></div>
+          <div id="options"></div>
+          <div id="button"></div>
+        </div>
       </section>
     `
   }
@@ -58,31 +68,24 @@ export default class Step2 extends Component<{}, Step2State, Step2Ref> {
   mounted() {
     const $stepper = this.$target.querySelector('#stepper')!
     const $container = this.$target.querySelector('#step2-container')!
-    const { resizeWidth, speed, wsClientId, loading } = this.state
-    const { cropData } = this.ref
+    const $crop = $container.querySelector('#crop')!
+    const $options = $container.querySelector('#options')!
+    const $button = $container.querySelector('#button')!
+    const { loading } = this.state
 
     if (loading) {
-      new Progress($container, {
-        insert: 'inner',
-      })
+      new Progress($container, {})
     } else {
-      new Stepper($stepper, { insert: 'inner' })
-      new Crop($container, {
-        insert: 'append',
-        updateState: this.updateState.bind(this),
+      new Stepper($stepper, {})
+      new Crop($crop, {
         updateRef: this.updateRef.bind(this),
       })
-      new Options($container, {
-        insert: 'append',
-        resizeWidth: this.state.resizeWidth,
-        updateState: this.updateState.bind(this),
+      new Options($options, {
+        ref: this.ref,
+        updateRef: this.updateRef.bind(this),
       })
-      new Button($container, {
-        insert: 'append',
-        cropData,
-        resizeWidth,
-        speed,
-        wsClientId,
+      new Button($button, {
+        step2: this,
         updateState: this.updateState.bind(this),
       })
     }
