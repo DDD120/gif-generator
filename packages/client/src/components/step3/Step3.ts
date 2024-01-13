@@ -41,9 +41,7 @@ export default class Step3 extends Component<{}, State> {
 
   mounted() {
     const $stepper = document.querySelector('#stepper')!
-    new Stepper($stepper, {
-      insert: 'inner',
-    })
+    new Stepper($stepper, {})
   }
 
   handleFilenameChange(e: Event) {
