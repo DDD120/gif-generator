@@ -7,8 +7,8 @@ interface State {
   id: string
   startTime: string
   duration: number
-  screenshot: string
-  imgSrc: string
+  screenshotSrc: string
+  gifSrc: string
 }
 
 export const store = {
@@ -18,8 +18,8 @@ export const store = {
     id: '0c21cec7-0b11-4a11-ae84-6403d42ba159',
     startTime: '',
     duration: 0,
-    screenshot: '',
-    imgSrc: '',
+    screenshotSrc: '',
+    gifSrc: '',
   }),
 
   setState(newState: Partial<State>) {

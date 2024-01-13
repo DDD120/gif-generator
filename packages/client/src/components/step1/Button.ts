@@ -14,7 +14,7 @@ interface Response {
   state: 'success' | 'fail'
   data: {
     id: string
-    image: string
+    screenshotSrc: string
   }
 }
 
@@ -38,13 +38,13 @@ export default class Button extends Component<Props> {
     const screenshot = await this.createScreenshots()
     if (screenshot.state === 'success') {
       updateState({ loading: false })
-      const { id, image } = screenshot.data
+      const { id, screenshotSrc } = screenshot.data
       store.setState({
         requestUrl,
         id,
         startTime,
         duration: this.getDuration(startTime, endTime),
-        screenshot: `data:image/png;base64,${image}`,
+        screenshotSrc,
         step: 2,
       })
     }
@@ -55,7 +55,7 @@ export default class Button extends Component<Props> {
     const res = (await api
       .post('screenshots', {
         json: {
-          url: requestUrl,
+          requestUrl,
           startTime,
         },
       })

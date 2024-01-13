@@ -26,7 +26,7 @@ export default class Button extends Component<Props> {
     this.props.updateState({ loading: true })
     await this.createGIF()
     const src = await this.getGIF()
-    store.setState({ step: 3, imgSrc: src })
+    store.setState({ step: 3, gifSrc: src })
   }
 
   async createGIF() {
@@ -36,9 +36,10 @@ export default class Button extends Component<Props> {
     const res = await api
       .post('gif', {
         json: {
-          url: requestUrl,
+          requestUrl,
           id,
-          time: [startTime, duration],
+          startTime,
+          duration,
           cropData,
           resizeWidth,
           speed,

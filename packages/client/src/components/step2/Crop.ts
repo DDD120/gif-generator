@@ -19,7 +19,7 @@ export default class Crop extends Component<Props> {
         <div class="my-4">
         <h2 class="text-2xl font-bold dark:text-white mb-2">자르기</h2>
         <div>
-          <img id="img" src="${store.state.screenshot}" alt="스크린샷" />
+          <img id="img" src="${store.state.screenshotSrc}" alt="스크린샷" />
         </div>
       </div>
       <div class="my-4">

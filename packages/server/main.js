@@ -28,14 +28,14 @@ const server = app.listen(4000, () => {
 })
 
 app.post('/screenshots', (req, res) => {
-  const { url, startTime } = req.body
+  const { requestUrl, startTime } = req.body
   const id = uuid()
   const dir = `./screenshots/${id}`
 
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
   }
-  ffmpeg(url)
+  ffmpeg(requestUrl)
     .screenshots({
       timestamps: [startTime],
       folder: `screenshots/${id}`,
@@ -46,7 +46,9 @@ app.post('/screenshots', (req, res) => {
         state: 'success',
         data: {
           id,
-          image: toBase64(`${dir}/${files[0]}`),
+          screenshotSrc: `data:image/png;base64,${toBase64(
+            `${dir}/${files[0]}`
+          )}`,
         },
       })
     })
@@ -67,16 +69,16 @@ wss.on('connection', (ws) => {
 app.post('/gif', async (req, res) => {
   const {
     cropData: { x, y, width, height },
-    url,
-    time,
+    requestUrl,
+    startTime,
+    duration,
     resizeWidth,
     id,
     speed,
     wsClientId,
   } = req.body
-  const [startTime, duration] = time
 
-  ffmpeg(url)
+  ffmpeg(requestUrl)
     .complexFilter(
       `[0:v] setpts=${speed}*PTS,fps=30,crop=${width}:${height}:${x}:${y},scale=${resizeWidth}:-1, split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1`
     )
@@ -88,7 +90,7 @@ app.post('/gif', async (req, res) => {
     })
     .save(`screenshots/${id}/animated.gif`)
     .on('end', () => {
-      res.json({ success: true })
+      res.json({ state: 'success' })
     })
 })
 
