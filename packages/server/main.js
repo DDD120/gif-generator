@@ -42,7 +42,7 @@ app.post('/screenshots', (req, res) => {
     })
     .on('end', () => {
       const files = fs.readdirSync(dir)
-      return res.json({
+      return res.status(200).json({
         state: 'success',
         data: {
           id,
@@ -50,6 +50,11 @@ app.post('/screenshots', (req, res) => {
             `${dir}/${files[0]}`
           )}`,
         },
+      })
+    })
+    .on('error', () => {
+      return res.status(400).json({
+        state: 'failure',
       })
     })
 })

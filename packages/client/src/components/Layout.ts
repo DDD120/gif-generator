@@ -14,6 +14,7 @@ export default class Layout extends Component {
               id="container"
               class="mt-8 max-w-[640px] w-[90%] flex flex-col justify-center items-center"
             ></main>
+            <div id="toast" class="w-full flex items-center justify-center fixed top-5 left-1/2 -translate-x-1/2"></div>
           </div>
         `
   }

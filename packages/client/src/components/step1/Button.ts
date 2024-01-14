@@ -2,6 +2,7 @@ import Component from '../../core/Component'
 import api from '../../api/api'
 import { store } from '../../store/store'
 import { Step1State } from './Step1'
+import ErrorToast from '../ErrorToast'
 
 interface Props {
   requestUrl: string
@@ -11,7 +12,7 @@ interface Props {
 }
 
 interface Response {
-  state: 'success' | 'fail'
+  state: 'success' | 'failure'
   data: {
     id: string
     screenshotSrc: string
@@ -33,11 +34,10 @@ export default class Button extends Component<Props> {
 
   async handleClick() {
     const { startTime, endTime, requestUrl, updateState } = this.props
-
     updateState({ loading: true })
-    const screenshot = await this.createScreenshots()
-    if (screenshot.state === 'success') {
-      updateState({ loading: false })
+
+    try {
+      const screenshot = await this.createScreenshots()
       const { id, screenshotSrc } = screenshot.data
       store.setState({
         requestUrl,
@@ -47,6 +47,14 @@ export default class Button extends Component<Props> {
         screenshotSrc,
         step: 2,
       })
+    } catch (e) {
+      const $target = document.querySelector('#toast')!
+      new ErrorToast($target, {
+        title: '요청에 실패하였습니다.',
+        message: '올바른 정보인지 확인해주세요.',
+      })
+    } finally {
+      updateState({ loading: false })
     }
   }
 
