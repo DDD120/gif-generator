@@ -11,16 +11,18 @@ export interface Step1State {
   startTime: string
   endTime: string
   loading: boolean
+  isRequired: boolean
 }
 
 export default class Step1 extends Component<{}, Step1State> {
   setup() {
     this.state = {
-      requestUrl: './video/abc.mp4',
+      requestUrl: '',
       currentType: 'url',
-      startTime: '00:00:01',
-      endTime: '00:00:02',
+      startTime: '',
+      endTime: '',
       loading: false,
+      isRequired: false,
     }
   }
 
@@ -43,7 +45,8 @@ export default class Step1 extends Component<{}, Step1State> {
     const $requestTypeInput = $wrapper.querySelector('#request-type-input')!
     const $timeInput = $wrapper.querySelector('#time-input')!
     const $buttonWrapper = $wrapper.querySelector('#button-wrapper')!
-    const { requestUrl, currentType, loading, startTime, endTime } = this.state
+    const { requestUrl, currentType, loading, startTime, endTime, isRequired } =
+      this.state
 
     if (loading) {
       new Loading($wrapper, {})
@@ -63,6 +66,7 @@ export default class Step1 extends Component<{}, Step1State> {
         requestUrl,
         startTime,
         endTime,
+        isRequired,
         updateState: this.updateState.bind(this),
       })
     }

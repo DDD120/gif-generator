@@ -29,7 +29,7 @@ export default class RequestTypeInput extends Component<Props> {
       <div class="mb-6">
         ${
           currentType === 'url'
-            ? `<input id='video-url' value="${requestUrl}" type='text' class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>`
+            ? `<input id='video-url' placeholder="영상 URL" value="${requestUrl}" type='text' class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>`
             : "<input id='file-upload' accept='video/mp4,video/x-m4v,video/*' class='block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400' type='file' />"
         }
       </div>
