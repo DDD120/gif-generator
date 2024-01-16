@@ -21,7 +21,9 @@ export default class Step3 extends Component<{}, State> {
     return `
       <div id="stepper" class="mb-8"></div>
       <main class="flex flex-col gap-4 w-full">
-        <img src=${gifSrc} alt="생성된 움짤" />
+        <div class="flex justify-center items-center">
+          <img src=${gifSrc} alt="생성된 움짤" />
+        </div>
         <div>
           <label for="gif-download-filename" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">저장명</label>
           <input type="text" value="${filename}" id="gif-download-filename" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="download" required />
