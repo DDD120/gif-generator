@@ -22,11 +22,11 @@ export default class Layout extends Component {
     const $container = document.querySelector('#container') as HTMLDivElement
     observe(() => {
       if (store.state.step === 1) {
-        new Step1($container, { insert: 'inner' })
+        new Step1($container, {})
       } else if (store.state.step === 2) {
-        new Step2($container, { insert: 'inner' })
+        new Step2($container, {})
       } else {
-        new Step3($container, { insert: 'inner' })
+        new Step3($container, {})
       }
     })
   }

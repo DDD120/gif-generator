@@ -91,11 +91,21 @@ app.post('/gif', async (req, res) => {
     .duration(duration * speed)
     .on('progress', (progress) => {
       const ws = clients.get(wsClientId)
+      if (!ws) {
+        return res.status(400).json({
+          state: 'failure',
+        })
+      }
       ws.send(progress.frames)
     })
     .save(`screenshots/${id}/animated.gif`)
     .on('end', () => {
-      res.json({ state: 'success' })
+      return res.status(200).json({ state: 'success' })
+    })
+    .on('error', () => {
+      return res.status(400).json({
+        state: 'failure',
+      })
     })
 })
 

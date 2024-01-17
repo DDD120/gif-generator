@@ -15,7 +15,7 @@ export const store = {
   state: observable<State>({
     step: 1,
     requestUrl: '',
-    id: '0c21cec7-0b11-4a11-ae84-6403d42ba159',
+    id: '',
     startTime: '',
     duration: 0,
     screenshotSrc: '',
@@ -26,5 +26,17 @@ export const store = {
     for (let key in newState) {
       this.state[key] = newState[key]
     }
+  },
+
+  reset() {
+    this.setState({
+      step: 1,
+      requestUrl: '',
+      id: '',
+      startTime: '',
+      duration: 0,
+      screenshotSrc: '',
+      gifSrc: '',
+    })
   },
 }
