@@ -29,6 +29,7 @@ const server = app.listen(4000, () => {
 
 app.post('/screenshots', (req, res) => {
   const { requestUrl, startTime } = req.body
+
   const id = uuid()
   const dir = `./screenshots/${id}`
 
@@ -111,5 +112,10 @@ app.post('/gif', async (req, res) => {
 
 app.get('/gif/:id', (req, res) => {
   const { id } = req.params
+  if (!id) {
+    return res.status(400).json({
+      state: 'failure',
+    })
+  }
   return res.download(`screenshots/${id}/animated.gif`, 'animated.gif')
 })
