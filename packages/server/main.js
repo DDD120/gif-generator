@@ -3,6 +3,7 @@ const cors = require('cors')
 const services = require('./services')
 const WebSocket = require('ws')
 const app = express()
+require('./cron.js')
 
 app.use(express.json())
 app.use(
