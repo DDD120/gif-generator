@@ -1,7 +1,7 @@
 const cron = require('node-cron')
 const fs = require('fs')
 
-cron.schedule('*/5 * * * *', () => {
+cron.schedule('*/1 * * * *', () => {
   const directoryPath = './screenshots'
   const files = fs.readdirSync(directoryPath)
   for (const file of files) {
@@ -13,8 +13,10 @@ cron.schedule('*/5 * * * *', () => {
     const elapsedTimeInMilliseconds = currentTime - folderCreationTime
     const elapsedTimeInMinutes = elapsedTimeInMilliseconds / (1000 * 60)
 
-    if (elapsedTimeInMinutes > 20) {
-      fs.rm(path, { recursive: true, force: true })
+    if (elapsedTimeInMinutes > 1) {
+      fs.rm(path, { recursive: true, force: true }, (error) => {
+        console.log(error)
+      })
     }
   }
 })
