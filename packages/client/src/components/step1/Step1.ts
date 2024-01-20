@@ -7,7 +7,6 @@ import RequestTypeInput from './RequestTypeInput'
 
 export interface Step1State {
   requestUrl: string
-  currentType: 'url' | 'file'
   startTime: string
   endTime: string
   loading: boolean
@@ -18,7 +17,6 @@ export default class Step1 extends Component<{}, Step1State> {
   setup() {
     this.state = {
       requestUrl: '',
-      currentType: 'url',
       startTime: '',
       endTime: '',
       loading: false,
@@ -45,8 +43,7 @@ export default class Step1 extends Component<{}, Step1State> {
     const $requestTypeInput = $wrapper.querySelector('#request-type-input')!
     const $timeInput = $wrapper.querySelector('#time-input')!
     const $buttonWrapper = $wrapper.querySelector('#button-wrapper')!
-    const { requestUrl, currentType, loading, startTime, endTime, isRequired } =
-      this.state
+    const { requestUrl, loading, startTime, endTime, isRequired } = this.state
 
     if (loading) {
       new Loading($wrapper, {})
@@ -54,7 +51,6 @@ export default class Step1 extends Component<{}, Step1State> {
       new Stepper($stepper, {})
       new RequestTypeInput($requestTypeInput, {
         requestUrl,
-        currentType,
         updateState: this.updateState.bind(this),
       })
       new TimeInput($timeInput, {
