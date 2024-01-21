@@ -9,11 +9,22 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css"
       rel="stylesheet"
     />
-    <title>GIF GENERATOR</title>
+    <title>움짤 생성기</title>
   </head>
-  <body>
+  <body class="bg-white dark:bg-gray-800">
     <div id="app"></div>
     <script type="module" src="/src/app.ts"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script>
+      if (
+        localStorage.getItem('color-theme') === 'dark' ||
+        (!('color-theme' in localStorage) &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
   </body>
 </html>

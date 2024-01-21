@@ -26,7 +26,6 @@ export default class Crop extends Component<Props> {
         <h3 class="text-xl font-bold dark:text-white mb-2">프리뷰</h3>
         <div id="preview" class="w-[420px] h-[420px] overflow-hidden bg-slate-400 [&>*]:w-full"></div>
       </div>
-      <hr class="my-2" />
     `
   }
 

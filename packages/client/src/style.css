@@ -13,3 +13,9 @@
 * {
   font-family: 'GmarketSansMedium';
 }
+
+html,
+body,
+#app {
+  height: 100%;
+}

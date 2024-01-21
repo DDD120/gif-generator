@@ -58,6 +58,7 @@ export default class Step2 extends Component<{}, Step2State, Step2Ref> {
       <section id="step2-wrapper" class="w-full flex justify-center items-center">
         <div id="step2-container" class="w-full">
           <div id="crop"></div>
+          <hr class="my-2 h-[2px] rounded-sm border-none bg-gray-300 dark:bg-gray-600" />
           <div id="options"></div>
           <div id="button"></div>
         </div>
