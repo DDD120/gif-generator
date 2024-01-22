@@ -111,7 +111,11 @@ export default class Step2 extends Component<{}, Step2State, Step2Ref> {
 
   setPercent(frame: string) {
     const { duration } = store.state
-    const percent = ((Number(frame) / (30 * (duration ?? 1))) * 100).toFixed(0)
+    const { speed } = this.ref
+    const percent = (
+      ((Number(frame) / (30 * (duration ?? 1))) * 100) /
+      speed
+    ).toFixed(0)
     return percent
   }
 }
