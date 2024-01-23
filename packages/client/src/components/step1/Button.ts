@@ -4,6 +4,7 @@ import { store } from '../../store/store'
 import { Step1State } from './Step1'
 import ErrorToast from '../ErrorToast'
 import { getDuration } from '../../utils'
+import { t } from '../../locale/index'
 
 interface Props {
   requestUrl: string
@@ -29,7 +30,9 @@ export default class Button extends Component<Props> {
       <button ${
         !isRequired && 'disabled'
       } id="step1-button" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition disabled:bg-gray-400 disabled:hover:bg-gray-400 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
-      dark:disabled:bg-gray-600 dark:hover:disabled:bg-gray-600">완료</button>
+      dark:disabled:bg-gray-600 dark:hover:disabled:bg-gray-600">${t(
+        'step1.button'
+      )}</button>
     `
   }
 
