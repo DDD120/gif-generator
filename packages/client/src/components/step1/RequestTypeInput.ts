@@ -1,6 +1,6 @@
 import Component from '../../core/Component'
 import { Step1State } from './Step1'
-import { t } from '../../locale/index'
+import { t } from '../../language/index'
 
 interface Props {
   requestUrl: string

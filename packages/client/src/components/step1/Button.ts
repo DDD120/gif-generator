@@ -4,7 +4,7 @@ import { store } from '../../store/store'
 import { Step1State } from './Step1'
 import ErrorToast from '../ErrorToast'
 import { getDuration } from '../../utils'
-import { t } from '../../locale/index'
+import { t } from '../../language/index'
 
 interface Props {
   requestUrl: string

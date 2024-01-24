@@ -1,4 +1,5 @@
-import Layout from './components/Layout.ts'
+import Layout from './components/layout/Layout.ts'
+import './language/index.ts'
 
 class App {
   constructor() {

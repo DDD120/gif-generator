@@ -1,7 +1,7 @@
 import Component from '../../core/Component'
 import { getDuration } from '../../utils'
 import { Step1State } from './Step1'
-import { t } from '../../locale/index'
+import { t } from '../../language/index'
 
 interface Props {
   startTime: string

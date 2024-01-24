@@ -1,0 +1,23 @@
+{
+  "title": "English",
+  "langSelection": "언어 선택",
+  "stepper": {
+    "1": "영상 정보 입력",
+    "2": "자르기 및 옵션 설정",
+    "3": "생성 및 다운로드"
+  },
+  "step1": {
+    "requestTypeInput": {
+      "placeholder": "영상 URL"
+    },
+    "timeInput": {
+      "startTimeLabel": "시작 시각",
+      "endTimeLabel": "종료 시각",
+      "caution": {
+        "1": "형식에 맞게 입력해 주세요. 예) 1초 -> 00:00:01",
+        "2": "시작 시각과 종료 시각 사이는 최대 3초입니다."
+      }
+    },
+    "button": "완료"
+  }
+}

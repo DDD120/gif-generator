@@ -1,6 +1,6 @@
 import Component from '../core/Component'
 import { store } from '../store/store'
-import { t } from '../locale/index'
+import { t } from '../language/index'
 
 export default class Stepper extends Component {
   template() {
