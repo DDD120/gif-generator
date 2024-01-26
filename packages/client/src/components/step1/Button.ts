@@ -60,8 +60,8 @@ export default class Button extends Component<Props> {
     } catch (e) {
       const $target = document.querySelector('#toast')!
       new ErrorToast($target, {
-        title: '요청에 실패하였습니다.',
-        message: '올바른 정보인지 확인해주세요.',
+        title: t('step1.errorMessage.title'),
+        message: t('step1.errorMessage.message'),
       })
     } finally {
       updateState({ loading: false })

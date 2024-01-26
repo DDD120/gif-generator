@@ -16,7 +16,7 @@ export default class Stepper extends Component {
             }">
                 <p class="translate-y-[0.8px]">1</p>
             </div>
-            <p>${t('stepper.1')}</p>
+            <p id="step1">${t('stepper.1')}</p>
             <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
             </svg>
@@ -31,7 +31,7 @@ export default class Stepper extends Component {
             }">
                 <p class="translate-y-[0.8px]">2</p>
             </div>
-            <p>${t('stepper.2')}</p>
+            <p id="step2">${t('stepper.2')}</p>
             <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
             </svg>
@@ -46,7 +46,7 @@ export default class Stepper extends Component {
             }">
                 <p class="translate-y-[0.8px]">3</p>
             </div>
-            <p>${t('stepper.3')}</p>
+            <p id="step3">${t('stepper.3')}</p>
         </li>
     </ol>
   `

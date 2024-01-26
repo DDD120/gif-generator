@@ -1,23 +1,27 @@
 {
-  "title": "English",
-  "langSelection": "언어 선택",
+  "title": "GIF Generator",
+  "langSelection": "language selection",
   "stepper": {
-    "1": "영상 정보 입력",
-    "2": "자르기 및 옵션 설정",
-    "3": "생성 및 다운로드"
+    "1": "Enter information",
+    "2": "Crop and option settings",
+    "3": "Creating and Downloading"
   },
   "step1": {
     "requestTypeInput": {
-      "placeholder": "영상 URL"
+      "placeholder": "video url"
     },
     "timeInput": {
-      "startTimeLabel": "시작 시각",
-      "endTimeLabel": "종료 시각",
+      "startTimeLabel": "start time",
+      "endTimeLabel": "end time",
       "caution": {
-        "1": "형식에 맞게 입력해 주세요. 예) 1초 -> 00:00:01",
-        "2": "시작 시각과 종료 시각 사이는 최대 3초입니다."
+        "1": "Please enter it according to the format. ex) 1 second -> 00:00:01",
+        "2": "Up to 3 seconds between start and end times."
       }
     },
-    "button": "완료"
+    "button": "complete",
+    "errorMessage": {
+      "title": "Request failed",
+      "message": "Please make sure it's the right information"
+    }
   }
 }

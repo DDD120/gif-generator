@@ -8,7 +8,7 @@
   },
   "step1": {
     "requestTypeInput": {
-      "placeholder": "영상 URL"
+      "placeholder": "영상 링크"
     },
     "timeInput": {
       "startTimeLabel": "시작 시각",
@@ -18,6 +18,10 @@
         "2": "시작 시각과 종료 시각 사이는 최대 3초입니다."
       }
     },
-    "button": "완료"
+    "button": "완료",
+    "errorMessage": {
+      "title": "요청에 실패하였습니다.",
+      "message": "올바른 정보인지 확인해주세요."
+    }
   }
 }
