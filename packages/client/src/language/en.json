@@ -23,5 +23,35 @@
       "title": "Request failed",
       "message": "Please make sure it's the right information"
     }
+  },
+  "step2": {
+    "crop": {
+      "title": "Crop",
+      "imgAlt": "Screen shot",
+      "previewTitle": "Preview"
+    },
+    "options": {
+      "title": "Options",
+      "resize": {
+        "label": "width",
+        "caution": {
+          "1": "It has a minimum width of 100px and a maximum width of 1000px."
+        }
+      },
+      "speed": {
+        "title": "Speed",
+        "value": {
+          "0.5": "fast",
+          "1": "default",
+          "2": "slow"
+        }
+      }
+    },
+    "button": "complete",
+    "errorMessage": {
+      "title": "Request failed",
+      "message": "Error creating gifs, please try again."
+    },
+    "progress": "Generating..."
   }
 }

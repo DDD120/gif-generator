@@ -1,5 +1,6 @@
 import Component from '../../core/Component'
 import { Step2Ref } from './Step2'
+import { t } from '../../language'
 
 interface Props {
   ref: Step2Ref
@@ -11,19 +12,31 @@ export default class Options extends Component<Props> {
     const { resizeWidth } = this.props.ref
 
     return `
-      <h2 class="text-2xl font-bold dark:text-white mb-2">옵션</h2>
+      <h2 id="optionsTitle" class="text-2xl font-bold dark:text-white mb-2">${t(
+        'step2.options.title'
+      )}</h2>
       <div class="mb-6">
-        <label for="resize" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">넓이</label>
+        <label id="resizeLabel" for="resize" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${t(
+          'step2.options.resize.label'
+        )}</label>
         <input value="${resizeWidth}"  min="100" max="1000" type="number" id="resize" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-        <ul class="max-w-md my-4 space-y-1 text-sm text-gray-500 list-disc list-inside dark:text-gray-400">
-          <li>최소 넓이 100px, 최대 넓이 1000px 입니다.</li>
+        <ul class="w-full my-4 space-y-1 text-sm text-gray-500 list-disc list-inside dark:text-gray-400">
+          <li id="caution1">${t('step2.options.resize.caution.1')}</li>
         </ul>
       </div>
-      <label for="speed" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">속도</label>
+      <label for="speed" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${t(
+        'step2.options.speed.title'
+      )}</label>
       <select id="speed" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option value="0.5">빠르게</option>
-          <option value="1" selected>기본</option>
-          <option value="2">느리게</option>
+          <option id="fast" value="0.5">${t(
+            'step2.options.speed.value.0.5'
+          )}</option>
+          <option id="default" value="1" selected>${t(
+            'step2.options.speed.value.1'
+          )}</option>
+          <option id="slow" value="2">${t(
+            'step2.options.speed.value.2'
+          )}</option>
         </select>
       </div>
     `

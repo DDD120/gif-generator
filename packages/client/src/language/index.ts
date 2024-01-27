@@ -1,7 +1,7 @@
 import i18next from 'i18next'
 import ko from './ko.json'
 import en from './en.json'
-import { step1ToKo, stepperToKo } from './toKo'
+import { changeStep1Lang, changeStepperLang } from './changeLang'
 
 declare module 'i18next' {
   interface CustomTypeOptions {
@@ -30,8 +30,8 @@ i18next.init({
 
 i18next.on('languageChanged', () => {
   document.getElementById('title')!.textContent = i18next.t('title')
-  stepperToKo()
-  step1ToKo()
+  changeStepperLang()
+  changeStep1Lang()
 })
 
 export default i18next

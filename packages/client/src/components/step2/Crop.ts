@@ -3,6 +3,7 @@ import Cropper from 'cropperjs'
 import Component from '../../core/Component'
 import { store } from '../../store/store'
 import { Step2Ref } from './Step2'
+import { t } from '../../language'
 
 interface Props {
   updateRef: (ref: Partial<Step2Ref>) => void
@@ -17,13 +18,19 @@ export default class Crop extends Component<Props> {
     return `
       <div class="w-full">
         <div class="my-4">
-        <h2 class="text-2xl font-bold dark:text-white mb-2">자르기</h2>
+        <h2 id="cropTitle" class="text-2xl font-bold dark:text-white mb-2">${t(
+          'step2.crop.title'
+        )}</h2>
         <div>
-          <img id="img" src="${store.state.screenshotSrc}" alt="스크린샷" />
+        <img id="img" src="${store.state.screenshotSrc}" alt="${t(
+          'step2.crop.imgAlt'
+        )}" />
         </div>
       </div>
       <div class="my-4">
-        <h3 class="text-xl font-bold dark:text-white mb-2">프리뷰</h3>
+        <h3 class="text-xl font-bold dark:text-white mb-2">${t(
+          'step2.crop.previewTitle'
+        )}</h3>
         <div id="preview" class="w-[420px] h-[420px] overflow-hidden bg-slate-400 [&>*]:w-full"></div>
       </div>
     `
