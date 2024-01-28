@@ -23,12 +23,12 @@ export default class Crop extends Component<Props> {
         )}</h2>
         <div>
         <img id="img" src="${store.state.screenshotSrc}" alt="${t(
-          'step2.crop.imgAlt'
-        )}" />
+      'step2.crop.imgAlt'
+    )}" />
         </div>
       </div>
       <div class="my-4">
-        <h3 class="text-xl font-bold dark:text-white mb-2">${t(
+        <h3 id="previewTitle" class="text-xl font-bold dark:text-white mb-2">${t(
           'step2.crop.previewTitle'
         )}</h3>
         <div id="preview" class="w-[420px] h-[420px] overflow-hidden bg-slate-400 [&>*]:w-full"></div>

@@ -11,6 +11,7 @@ export function changeStepperLang() {
 export function changeStep1Lang() {
   const $target = document.getElementById('step1-wrapper') as HTMLElement
 
+  if (!$target) return
   ;($target.querySelector('#video-url') as HTMLInputElement).placeholder = t(
     'step1.requestTypeInput.placeholder'
   )
@@ -32,9 +33,14 @@ export function changeStep1Lang() {
 export function changeStep2Lang() {
   const $target = document.getElementById('step2-wrapper') as HTMLElement
 
+  if (!$target) return
+
   $target.querySelector('#cropTitle')!.textContent = t('step2.crop.title')
   ;($target.querySelector('#img') as HTMLImageElement).alt =
     t('step2.crop.imgAlt')
+  $target.querySelector('#previewTitle')!.textContent = t(
+    'step2.crop.previewTitle'
+  )
   $target.querySelector('#optionsTitle')!.textContent = t('step2.options.title')
   $target.querySelector('#resizeLabel')!.textContent = t(
     'step2.options.resize.label'
@@ -49,6 +55,9 @@ export function changeStep2Lang() {
     'step2.options.speed.value.1'
   )
   $target.querySelector('#slow')!.textContent = t('step2.options.speed.value.2')
-  $target.querySelector('#step-button')!.textContent = t('step2.button')
-  $target.querySelector('#progress')!.textContent = t('step2.progress')
+  $target.querySelector('#step2-button')!.textContent = t('step2.button')
+
+  const $progress = $target.querySelector('#progress')
+  if (!$progress) return
+  $progress!.textContent = t('step2.progress')
 }
