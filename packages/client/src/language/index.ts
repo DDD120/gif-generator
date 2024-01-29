@@ -4,6 +4,7 @@ import en from './en.json'
 import {
   changeStep1Lang,
   changeStep2Lang,
+  changeStep3Lang,
   changeStepperLang,
 } from './changeLang'
 
@@ -37,6 +38,7 @@ i18next.on('languageChanged', () => {
   changeStepperLang()
   changeStep1Lang()
   changeStep2Lang()
+  changeStep3Lang()
 })
 
 export default i18next

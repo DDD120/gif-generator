@@ -61,3 +61,14 @@ export function changeStep2Lang() {
   if (!$progress) return
   $progress!.textContent = t('step2.progress')
 }
+
+export function changeStep3Lang() {
+  const $target = document.getElementById('step3-wrapper') as HTMLElement
+
+  if (!$target) return
+  ;($target.querySelector('#gif')! as HTMLImageElement).alt = t('step3.gifAlt')
+  $target.querySelector('#gif-download-filename-label')!.textContent = t(
+    'step3.filenameLabel'
+  )
+  $target.querySelector('#download')!.textContent = t('step3.download')
+}

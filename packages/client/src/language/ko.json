@@ -53,5 +53,10 @@
       "message": "움짤 생성 도중 오류가 발생하였습니다. 다시 시도해 주세요."
     },
     "progress": "생성 중..."
+  },
+  "step3": {
+    "gifAlt": "생성된 움짤",
+    "filenameLabel": "저장명",
+    "download": "다운로드"
   }
 }

@@ -53,5 +53,10 @@
       "message": "Error creating gifs, please try again."
     },
     "progress": "Generating..."
+  },
+  "step3": {
+    "gifAlt": "generated GIF",
+    "filenameLabel": "file name",
+    "download": "download"
   }
 }
