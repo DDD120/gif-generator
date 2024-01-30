@@ -16,7 +16,7 @@ export default class Layout extends Component {
               <h1 id="title" class="mt-20 text-3xl font-extrabold dark:text-white">${t(
                 'title'
               )}</h1>
-              <div class="fixed top-2 right-2 flex gap-2">
+              <div class="absolute top-2 right-2 flex gap-2">
                 <div id="darkmode"></div>
                 <div id="language"></div>
               </div>
