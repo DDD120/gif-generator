@@ -35,14 +35,14 @@ export function changeStep2Lang() {
 
   if (!$target) return
 
-  $target.querySelector('#cropTitle')!.textContent = t('step2.crop.title')
+  $target.querySelector('#crop-title')!.textContent = t('step2.crop.title')
   ;($target.querySelector('#img') as HTMLImageElement).alt =
     t('step2.crop.imgAlt')
-  $target.querySelector('#previewTitle')!.textContent = t(
+  $target.querySelector('#preview-title')!.textContent = t(
     'step2.crop.previewTitle'
   )
-  $target.querySelector('#optionsTitle')!.textContent = t('step2.options.title')
-  $target.querySelector('#resizeLabel')!.textContent = t(
+  $target.querySelector('#options-title')!.textContent = t('step2.options.title')
+  $target.querySelector('#resize-label')!.textContent = t(
     'step2.options.resize.label'
   )
   $target.querySelector('#caution1')!.textContent = t(

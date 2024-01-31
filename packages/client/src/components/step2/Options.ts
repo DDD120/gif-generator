@@ -12,14 +12,14 @@ export default class Options extends Component<Props> {
     const { resizeWidth } = this.props.ref
 
     return `
-      <h2 id="optionsTitle" class="text-2xl font-bold dark:text-white mb-2">${t(
+      <h2 id="options-title" class="text-2xl font-bold dark:text-white mb-2">${t(
         'step2.options.title'
       )}</h2>
       <div class="mb-6">
-        <label id="resizeLabel" for="resize" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${t(
+        <label id="resize-label" for="resize" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${t(
           'step2.options.resize.label'
         )}</label>
-        <input value="${resizeWidth}"  min="100" max="1000" type="number" id="resize" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+        <input value="${resizeWidth}" min="100" max="1000" type="number" id="resize" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
         <ul class="w-full my-4 space-y-1 text-sm text-gray-500 list-disc list-inside dark:text-gray-400">
           <li id="caution1">${t('step2.options.resize.caution.1')}</li>
         </ul>

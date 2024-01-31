@@ -18,7 +18,7 @@ export default class Crop extends Component<Props> {
     return `
       <div class="w-full">
         <div class="my-4">
-        <h2 id="cropTitle" class="text-2xl font-bold dark:text-white mb-2">${t(
+        <h2 id="crop-title" class="text-2xl font-bold dark:text-white mb-2">${t(
           'step2.crop.title'
         )}</h2>
         <div>
@@ -28,7 +28,7 @@ export default class Crop extends Component<Props> {
         </div>
       </div>
       <div class="my-4">
-        <h3 id="previewTitle" class="text-xl font-bold dark:text-white mb-2">${t(
+        <h3 id="preview-title" class="text-xl font-bold dark:text-white mb-2">${t(
           'step2.crop.previewTitle'
         )}</h3>
         <div id="preview" class="w-[420px] h-[420px] overflow-hidden bg-slate-400 [&>*]:w-full"></div>
