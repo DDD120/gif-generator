@@ -7,6 +7,7 @@ import {
   changeStep3Lang,
   changeStepperLang,
 } from './changeLang'
+import { store } from '../store/store'
 
 declare module 'i18next' {
   interface CustomTypeOptions {
@@ -35,10 +36,21 @@ i18next.init({
 
 i18next.on('languageChanged', () => {
   document.getElementById('title')!.textContent = i18next.t('title')
+  document.title = i18next.t('title')
   changeStepperLang()
-  changeStep1Lang()
-  changeStep2Lang()
-  changeStep3Lang()
+
+  const { step } = store.state
+  switch (step) {
+    case 1:
+      changeStep1Lang()
+      break
+    case 2:
+      changeStep2Lang()
+      break
+    case 3:
+      changeStep3Lang()
+      break
+  }
 })
 
 export default i18next
