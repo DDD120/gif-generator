@@ -34,14 +34,13 @@ export default class Button extends Component<Props> {
       const src = await this.getGIF()
       store.setState({ step: 3, gifSrc: src })
     } catch {
+      updateState({ loading: false })
       store.reset()
       const $target = document.querySelector('#toast')!
       new ErrorToast($target, {
         title: t('step2.errorMessage.title'),
         message: t('step2.errorMessage.message'),
       })
-    } finally {
-      updateState({ loading: false })
     }
   }
 

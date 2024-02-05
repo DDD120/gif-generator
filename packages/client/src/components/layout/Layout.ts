@@ -3,8 +3,6 @@ import { observe } from '../../core/observer'
 import { store } from '../../store/store'
 import Darkmode from './Darkmode'
 import Step1 from '../step1/Step1'
-import Step2 from '../step2/Step2'
-import Step3 from '../step3/Step3'
 import { t } from '../../language/index'
 import LanguageSelector from './LanguageSelector'
 
@@ -38,12 +36,14 @@ export default class Layout extends Component {
     new Darkmode($darkmode, {})
     new LanguageSelector($language, {})
 
-    observe(() => {
+    observe(async () => {
       if (store.state.step === 1) {
         new Step1($container, {})
       } else if (store.state.step === 2) {
+        const { default: Step2 } = await import('../step2/Step2')
         new Step2($container, {})
       } else {
+        const { default: Step3 } = await import('../step3/Step3')
         new Step3($container, {})
       }
     })

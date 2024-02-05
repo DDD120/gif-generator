@@ -58,13 +58,12 @@ export default class Button extends Component<Props> {
         step: 2,
       })
     } catch (e) {
+      updateState({ loading: false })
       const $target = document.querySelector('#toast')!
       new ErrorToast($target, {
         title: t('step1.errorMessage.title'),
         message: t('step1.errorMessage.message'),
       })
-    } finally {
-      updateState({ loading: false })
     }
   }
 
