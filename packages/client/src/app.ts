@@ -4,9 +4,7 @@ import './language/index.ts'
 class App {
   constructor() {
     const $app = document.querySelector('#app')!
-    new Layout($app, {
-      insert: 'inner',
-    })
+    new Layout($app, {})
   }
 }
 
